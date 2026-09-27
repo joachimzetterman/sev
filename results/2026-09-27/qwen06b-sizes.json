@@ -1,0 +1,113 @@
+{
+  "timing_only": true,
+  "model": {
+    "backend": "mlx",
+    "model": "73e3e38d981303bc594367cd910ea6eb48349da8",
+    "model_files": {
+      "added_tokens.json": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680",
+      "config.json": "15d3ac26c043ae477273ed5802ee0f0b33bb14f18c9d3dd70910c02d906e3f1f",
+      "model.safetensors": "392e8d466d56100ada00eb82031fb854297fc9e389b7d303eba3af114e87bce2",
+      "model.safetensors.index.json": "7b294141456f6904936db03c00bca50fb5f6198f652fe8483f9cd2a1018accfb",
+      "special_tokens_map.json": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "253153d0738ceb4c668d2eff957714dd2bea0b56de772a9fdccd96cbf517e6a0",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    },
+    "revision": "980c5d11a17ac40bc652ef4ba4b69f6660319f9a662acc1156d51c276034ad33",
+    "runtime": "0.31.3",
+    "probability_kind": "conditional_letter_softmax",
+    "calibrated": false,
+    "prompt_version": "sev-prompt-0.1",
+    "max_prompt_tokens": 8192,
+    "thinking": false,
+    "question_execution": "separate_full_prefills"
+  },
+  "load_ms": 5887.076624989277,
+  "environment": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "question_count": 14,
+  "timing": [
+    {
+      "target_bytes": 512,
+      "actual_diff_bytes": 488,
+      "input_hash": "544581c63d1ce468b1cf29f49fa0087cddb1f74622a5e110a68ab301ac196611",
+      "repeat": 0,
+      "latency_ms": 2719.0386669972213,
+      "input_tokens": 7109,
+      "output_tokens": 0,
+      "input_tokens_per_second": 2635.692653200091,
+      "answer_token_mass_min": 0.388822078704834,
+      "peak_device_memory_bytes": 1509540072,
+      "cost_usd": null
+    },
+    {
+      "target_bytes": 512,
+      "actual_diff_bytes": 488,
+      "input_hash": "544581c63d1ce468b1cf29f49fa0087cddb1f74622a5e110a68ab301ac196611",
+      "repeat": 1,
+      "latency_ms": 2640.710332998424,
+      "input_tokens": 7109,
+      "output_tokens": 0,
+      "input_tokens_per_second": 2701.3663103461595,
+      "answer_token_mass_min": 0.388822078704834,
+      "peak_device_memory_bytes": 1509540072,
+      "cost_usd": null
+    },
+    {
+      "target_bytes": 2048,
+      "actual_diff_bytes": 2013,
+      "input_hash": "9d5dd7979cc0b83ff4017288403f40a5148c4d100883162801dda788a1125757",
+      "repeat": 0,
+      "latency_ms": 4632.597292002174,
+      "input_tokens": 12233,
+      "output_tokens": 0,
+      "input_tokens_per_second": 2649.2877077572302,
+      "answer_token_mass_min": 0.7379235625267029,
+      "peak_device_memory_bytes": 1654046896,
+      "cost_usd": null
+    },
+    {
+      "target_bytes": 2048,
+      "actual_diff_bytes": 2013,
+      "input_hash": "9d5dd7979cc0b83ff4017288403f40a5148c4d100883162801dda788a1125757",
+      "repeat": 1,
+      "latency_ms": 4639.933041995391,
+      "input_tokens": 12233,
+      "output_tokens": 0,
+      "input_tokens_per_second": 2644.4791941014983,
+      "answer_token_mass_min": 0.7379235625267029,
+      "peak_device_memory_bytes": 1654046896,
+      "cost_usd": null
+    },
+    {
+      "target_bytes": 8192,
+      "actual_diff_bytes": 8164,
+      "input_hash": "b56cbdee2fc4e32068a3c5b381d928efc1c15bd9b5f664e7380013dcad32020a",
+      "repeat": 0,
+      "latency_ms": 15504.221875002258,
+      "input_tokens": 32911,
+      "output_tokens": 0,
+      "input_tokens_per_second": 2127.4159998408254,
+      "answer_token_mass_min": 0.5254825353622437,
+      "peak_device_memory_bytes": 2069577832,
+      "cost_usd": null
+    },
+    {
+      "target_bytes": 8192,
+      "actual_diff_bytes": 8164,
+      "input_hash": "b56cbdee2fc4e32068a3c5b381d928efc1c15bd9b5f664e7380013dcad32020a",
+      "repeat": 1,
+      "latency_ms": 14385.57949999813,
+      "input_tokens": 32911,
+      "output_tokens": 0,
+      "input_tokens_per_second": 2293.4173669516304,
+      "answer_token_mass_min": 0.5254825353622437,
+      "peak_device_memory_bytes": 2069577832,
+      "cost_usd": null
+    }
+  ],
+  "limitations": [
+    "Synthetic padding, not representative real-diff quality or token distribution.",
+    "First request per size includes possible shape/kernel warmup.",
+    "There is no prefix cache in the ordinary MLX baseline."
+  ]
+}

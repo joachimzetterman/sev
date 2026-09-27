@@ -1,0 +1,19 @@
+name: research-contracts
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uv sync --locked
+      - run: uv run python -m unittest discover -s tests -v
+      - run: uv run sev validate data/smoke.jsonl
+      - run: uv run sev bench data/smoke.jsonl --split smoke --backend rules --out artifacts/ci-rules

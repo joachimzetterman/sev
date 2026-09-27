@@ -1,0 +1,31 @@
+{
+  "protocol_version": "sev-prompt-0.1",
+  "resolved_on": "2026-09-27",
+  "small_local": {
+    "model": "mlx-community/Qwen3-0.6B-4bit",
+    "revision": "73e3e38d981303bc594367cd910ea6eb48349da8",
+    "runtime": "mlx-lm==0.31.3",
+    "scoring": "four_letter_conditional_logits",
+    "trained_on_sev": false
+  },
+  "general_single_gpu": {
+    "model": "Qwen/Qwen3.5-27B",
+    "revision": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+    "runtime": "vllm==0.24.0",
+    "scoring": "structured_json_self_reported_probabilities",
+    "trained_on_sev": false
+  },
+  "general_large_candidate": {
+    "model": "Qwen/Qwen3.5-397B-A17B",
+    "revision": "8472618112abcbd45acbcdc58436aff4233c23f7",
+    "status": "not_run",
+    "trained_on_sev": false
+  },
+  "kev_transfer": {
+    "model": "jaredpalmer/kev-0.8b",
+    "revision": "9a45d25eb2ab761841196625383fa1dff0e56c1e",
+    "source_revision": "5920c5fe4ca8e0970ed4209ac2c9b8e18bea5109",
+    "status": "not_run",
+    "trained_on_sev": false
+  }
+}
