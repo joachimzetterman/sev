@@ -30,9 +30,12 @@ a security model. A null distribution is an explicit abstention. One-hot rule
 indicators are not estimated probabilities. The CLI is experiment plumbing;
 there is no default model and no pass/fail security exit code.
 
-An optional [GitHub Actions template](docs/github-actions.yml) runs the contract
-tests and rules smoke experiment. It is inactive; copy it to
-`.github/workflows/ci.yml` to enable automated checks.
+[GitHub Actions](.github/workflows/ci.yml) runs the contract tests, dataset
+validation, rules smoke experiment and package build on Python 3.11 and 3.13.
+CI uses standard Ubuntu CPU runners with a five-minute timeout per job, cancels
+superseded runs, and runs on pull requests and pushes to `main` to avoid duplicate
+branch/PR runs. It downloads no models, starts no cloud inference, and uploads no
+caches or artifacts.
 
 For a local ordinary language-model baseline on Apple Silicon:
 
