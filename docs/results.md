@@ -10,6 +10,10 @@ A label audit corrected one provisional boundary annotation before the archived 
 
 ## Executed configuration
 
+The [source manifest](../results/2026-09-27/source-manifest.json) identifies the
+exact benchmarked commit. Subsequent normalization of trailing blank lines does
+not alter inference behaviour.
+
 - Hardware: Apple M4 Pro, 24 GiB unified memory. Local Metal execution.
 - Ordinary model: `mlx-community/Qwen3-0.6B-4bit`, snapshot `73e3e38d981303bc594367cd910ea6eb48349da8`.
 - Runtime: `uv.lock`, MLX LM 0.31.3; four next-token letters, thinking disabled, separate full prefill for every question.

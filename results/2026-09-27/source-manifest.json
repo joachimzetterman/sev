@@ -1,0 +1,10 @@
+{
+  "measured_source_commit": "5b1e7d0efa4d46eddf03c78a34ae70a8a0979914",
+  "note": "Archived source hashes refer to this exact benchmarked commit. The subsequent commit only removes trailing blank lines from the listed files and records this manifest; inference behaviour is unchanged.",
+  "files_normalized_after_measurement": [
+    ".gitignore",
+    "pyproject.toml",
+    "sev/__init__.py",
+    "sev/__main__.py"
+  ]
+}
