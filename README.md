@@ -30,6 +30,10 @@ a security model. A null distribution is an explicit abstention. One-hot rule
 indicators are not estimated probabilities. The CLI is experiment plumbing;
 there is no default model and no pass/fail security exit code.
 
+An optional [GitHub Actions template](docs/github-actions.yml) runs the contract
+tests and rules smoke experiment. It is inactive; copy it to
+`.github/workflows/ci.yml` to enable automated checks.
+
 For a local ordinary language-model baseline on Apple Silicon:
 
 ```sh
