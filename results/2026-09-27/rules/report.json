@@ -1,0 +1,1757 @@
+{
+  "schema_version": "sev-0.1",
+  "taxonomy_version": "sev-taxonomy-0.1",
+  "created_at": "2026-09-27T14:51:45.410888+00:00",
+  "dataset_hash": "971aea0f8d333f4822bf2fa4177d9333ef070bd52b221dd5c63889d5bf7518d4",
+  "records": 20,
+  "repeats": 3,
+  "splits": {
+    "smoke": 20
+  },
+  "annotation_status": {
+    "provisional": 20
+  },
+  "model": {
+    "backend": "rules",
+    "model": "lexical-floor-0.1",
+    "probability_kind": "rule_indicator",
+    "calibrated": false
+  },
+  "prompt_hash": "9ff02683a5cb2b6ea86e14dcd9dee54378181ae1a733bfa014e8f9c1bf242a99",
+  "source_hashes": {
+    "sev/__init__.py": "017826d60c9f6de710eca0a3af0ad13357378f03098e536929a410c3543c7c9d",
+    "sev/__main__.py": "af2cb2853f5633f8cda6379c50967a34b988a0b2395f3c5e893ff47500091e5f",
+    "sev/backends.py": "957b3776e3a39d9b783b9ea3d15596e63a1105bdea7d45f8905ef3bc6a62f4ee",
+    "sev/classifier.py": "b25474cdc47f38ac8929b73ab4f2fb75096b946cc9bdcd5b00ac48d5fb7433e8",
+    "sev/cli.py": "399df861235081a00aa620dcc5874caa4fe829b4242c3306fbe6c4afb337aef8",
+    "sev/contracts.py": "8e3d7e77c45bfbbef050f63a90b3b3a79fb9ff3afcdb5dd8d9f72b76462a8d62",
+    "sev/experiment.py": "4eb4cd9e100f0738d48c4e8e7fc62c1a2f10aff07cbe403036003b11d9de3958",
+    "sev/metrics.py": "e3bf0b9b2355565eb6eb76c310648a4fd036d957eb6bf9618706c9cb5ced35fc",
+    "sev/taxonomy.py": "5a1e46402c82d3958a852aeb9b2eb0771e6dddac6c007be0965d20e77f8f42a8",
+    "uv.lock": "6876ebdbb2d6c82e872c14dfb73b8ca333f58f9b288dfda36eb6b1dec6899ce6"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "machine": "arm64"
+  },
+  "per_eval": {
+    "AUTHENTICATION_CHANGE": {
+      "n": 4,
+      "answered": 1,
+      "coverage": 0.25,
+      "accuracy_including_abstentions": 0.25,
+      "accuracy_answered": 1.0,
+      "classes": {
+        "YES": {
+          "support": 2,
+          "predicted": 1,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "NO": {
+          "support": 2,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 2,
+        "negative_support": 2,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 0.5
+      },
+      "confusion": {
+        "YES": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 1
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 2
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "AUTHORIZATION_RELEVANT": {
+      "n": 10,
+      "answered": 2,
+      "coverage": 0.2,
+      "accuracy_including_abstentions": 0.2,
+      "accuracy_answered": 1.0,
+      "classes": {
+        "YES": {
+          "support": 8,
+          "predicted": 2,
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4
+        },
+        "NO": {
+          "support": 2,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 2,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 8,
+        "negative_support": 2,
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 0.75
+      },
+      "confusion": {
+        "YES": {
+          "YES": 2,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 6
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 2
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "AUTHORIZATION_BOUNDARY_CHANGE": {
+      "n": 3,
+      "answered": 0,
+      "coverage": 0.0,
+      "accuracy_including_abstentions": 0.0,
+      "accuracy_answered": null,
+      "classes": {
+        "YES": {
+          "support": 3,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "NO": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 3,
+        "negative_support": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0,
+        "false_positive_rate": null,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 1.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 3
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "PRIVILEGE_INCREASE": {
+      "n": 10,
+      "answered": 0,
+      "coverage": 0.0,
+      "accuracy_including_abstentions": 0.0,
+      "accuracy_answered": null,
+      "classes": {
+        "YES": {
+          "support": 1,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "NO": {
+          "support": 4,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 1,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 4,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "resolved_binary": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 1,
+        "negative_support": 4,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 1.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 1
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 4
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 1
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 4
+        }
+      },
+      "calibration": null
+    },
+    "TENANT_BOUNDARY_CHANGE": {
+      "n": 4,
+      "answered": 4,
+      "coverage": 1.0,
+      "accuracy_including_abstentions": 0.75,
+      "accuracy_answered": 0.75,
+      "classes": {
+        "YES": {
+          "support": 3,
+          "predicted": 4,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571
+        },
+        "NO": {
+          "support": 1,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 3,
+        "fp": 1,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 3,
+        "negative_support": 1,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "false_positive_rate": 1.0,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 0.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 3,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "NO": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "SENSITIVE_DATA_HANDLING": {
+      "n": 5,
+      "answered": 2,
+      "coverage": 0.4,
+      "accuracy_including_abstentions": 0.2,
+      "accuracy_answered": 0.5,
+      "classes": {
+        "YES": {
+          "support": 1,
+          "predicted": 2,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        },
+        "NO": {
+          "support": 2,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 2,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "resolved_binary": {
+        "tp": 1,
+        "fp": 1,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 1,
+        "negative_support": 2,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "false_positive_rate": 0.5,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 0.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "NO": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 1
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 2
+        }
+      },
+      "calibration": null
+    },
+    "DATA_EXPOSURE_CHANGE": {
+      "n": 4,
+      "answered": 0,
+      "coverage": 0.0,
+      "accuracy_including_abstentions": 0.0,
+      "accuracy_answered": null,
+      "classes": {
+        "YES": {
+          "support": 4,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "NO": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 4,
+        "negative_support": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0,
+        "false_positive_rate": null,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 1.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 4
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "UNTRUSTED_INPUT_HANDLING_CHANGE": {
+      "n": 2,
+      "answered": 0,
+      "coverage": 0.0,
+      "accuracy_including_abstentions": 0.0,
+      "accuracy_answered": null,
+      "classes": {
+        "YES": {
+          "support": 2,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "NO": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 2,
+        "negative_support": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0,
+        "false_positive_rate": null,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 1.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 2
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "TRUST_BOUNDARY_CHANGE": {
+      "n": 1,
+      "answered": 0,
+      "coverage": 0.0,
+      "accuracy_including_abstentions": 0.0,
+      "accuracy_answered": null,
+      "classes": {
+        "YES": {
+          "support": 1,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "NO": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 1,
+        "negative_support": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0,
+        "false_positive_rate": null,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 1.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 1
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "NETWORK_EGRESS_CHANGE": {
+      "n": 3,
+      "answered": 1,
+      "coverage": 0.3333333333333333,
+      "accuracy_including_abstentions": 0.3333333333333333,
+      "accuracy_answered": 1.0,
+      "classes": {
+        "YES": {
+          "support": 1,
+          "predicted": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "NO": {
+          "support": 2,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 1,
+        "negative_support": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 0.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 2
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "CODE_EXECUTION_RELEVANT": {
+      "n": 5,
+      "answered": 2,
+      "coverage": 0.4,
+      "accuracy_including_abstentions": 0.2,
+      "accuracy_answered": 0.5,
+      "classes": {
+        "YES": {
+          "support": 1,
+          "predicted": 2,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        },
+        "NO": {
+          "support": 4,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 1,
+        "fp": 1,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 1,
+        "negative_support": 4,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "false_positive_rate": 0.25,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 0.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "NO": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 3
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "FILESYSTEM_ACCESS_CHANGE": {
+      "n": 2,
+      "answered": 1,
+      "coverage": 0.5,
+      "accuracy_including_abstentions": 0.5,
+      "accuracy_answered": 1.0,
+      "classes": {
+        "YES": {
+          "support": 1,
+          "predicted": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "NO": {
+          "support": 1,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 1,
+        "negative_support": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 0.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 1
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "DESTRUCTIVE_OPERATION": {
+      "n": 2,
+      "answered": 1,
+      "coverage": 0.5,
+      "accuracy_including_abstentions": 0.5,
+      "accuracy_answered": 1.0,
+      "classes": {
+        "YES": {
+          "support": 1,
+          "predicted": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "NO": {
+          "support": 1,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 1,
+        "negative_support": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 0.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 1,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 1
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    },
+    "ADDITIONAL_CONTEXT_REQUIRED": {
+      "n": 4,
+      "answered": 0,
+      "coverage": 0.0,
+      "accuracy_including_abstentions": 0.0,
+      "accuracy_answered": null,
+      "classes": {
+        "YES": {
+          "support": 3,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "NO": {
+          "support": 1,
+          "predicted": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "UNKNOWN": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "support": 0,
+          "predicted": 0,
+          "precision": null,
+          "recall": null,
+          "f1": null
+        }
+      },
+      "resolved_binary": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_no": 0,
+        "positive_support": 3,
+        "negative_support": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "missed_positive_rate_including_abstentions": 1.0
+      },
+      "confusion": {
+        "YES": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 3
+        },
+        "NO": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 1
+        },
+        "UNKNOWN": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        },
+        "INSUFFICIENT_CONTEXT": {
+          "YES": 0,
+          "NO": 0,
+          "UNKNOWN": 0,
+          "INSUFFICIENT_CONTEXT": 0,
+          "ABSTAIN": 0
+        }
+      },
+      "calibration": null
+    }
+  },
+  "errors": [],
+  "performance": {
+    "model_load_ms": 0.0007500057108700275,
+    "first_eval_ms": 0.3341670089866966,
+    "load_plus_first_eval_ms": 0.33491701469756663,
+    "warm_p50_ms": 0.015166995581239462,
+    "warm_p95_ms": 0.022716698003932827,
+    "client_peak_rss_bytes": 28262400,
+    "by_diff_bytes": {
+      "<1KiB": {
+        "n": 60,
+        "p50_ms": 0.01518749922979623,
+        "p95_ms": 0.023592000798089426
+      }
+    },
+    "inference_cost_usd": 0.0,
+    "server_memory_bytes": null,
+    "server_cold_start_ms": null
+  },
+  "timing": [
+    {
+      "id": "ui-colour",
+      "repeat": 0,
+      "latency_ms": 0.3341670089866966,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "ui-misleading-comment",
+      "repeat": 0,
+      "latency_ms": 0.03724999260157347,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "mfa-on",
+      "repeat": 0,
+      "latency_ms": 0.015541998436674476,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "login-colour",
+      "repeat": 0,
+      "latency_ms": 0.01129100564867258,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "tenant-filter-removed",
+      "repeat": 0,
+      "latency_ms": 0.01908400736283511,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "tenant-filter-fix",
+      "repeat": 0,
+      "latency_ms": 0.016999998479150236,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "injection-tenant",
+      "repeat": 0,
+      "latency_ms": 0.023542001144960523,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "permission-expanded",
+      "repeat": 0,
+      "latency_ms": 0.013415992725640535,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "permission-reduced",
+      "repeat": 0,
+      "latency_ms": 0.01274999522138387,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "pii-logging",
+      "repeat": 0,
+      "latency_ms": 0.02241699257865548,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "opaque-logging",
+      "repeat": 0,
+      "latency_ms": 0.012084012269042432,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "egress-host",
+      "repeat": 0,
+      "latency_ms": 0.018959006411023438,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "inbound-port",
+      "repeat": 0,
+      "latency_ms": 0.010250005288980901,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "shell-to-argv",
+      "repeat": 0,
+      "latency_ms": 0.02041699190158397,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "file-path-validation",
+      "repeat": 0,
+      "latency_ms": 0.019333994714543223,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "delete-guard",
+      "repeat": 0,
+      "latency_ms": 0.017333004507236183,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "temporary-list",
+      "repeat": 0,
+      "latency_ms": 0.00841599830891937,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "unseen-middleware",
+      "repeat": 0,
+      "latency_ms": 0.01129100564867258,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "conflicting-policy-contract",
+      "repeat": 0,
+      "latency_ms": 0.011083000572398305,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "protected-new-route",
+      "repeat": 0,
+      "latency_ms": 0.015166995581239462,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "ui-colour",
+      "repeat": 1,
+      "latency_ms": 0.010709001799114048,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "ui-misleading-comment",
+      "repeat": 1,
+      "latency_ms": 0.020333012798801064,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "mfa-on",
+      "repeat": 1,
+      "latency_ms": 0.012125005014240742,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "login-colour",
+      "repeat": 1,
+      "latency_ms": 0.010625008144415915,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "tenant-filter-removed",
+      "repeat": 1,
+      "latency_ms": 0.01666600292082876,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "tenant-filter-fix",
+      "repeat": 1,
+      "latency_ms": 0.016332996892742813,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "injection-tenant",
+      "repeat": 1,
+      "latency_ms": 0.022624997654929757,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "permission-expanded",
+      "repeat": 1,
+      "latency_ms": 0.012542004697024822,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "permission-reduced",
+      "repeat": 1,
+      "latency_ms": 0.011541997082531452,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "pii-logging",
+      "repeat": 1,
+      "latency_ms": 0.015500001609325409,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "opaque-logging",
+      "repeat": 1,
+      "latency_ms": 0.011207986972294748,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "egress-host",
+      "repeat": 1,
+      "latency_ms": 0.017541999113745987,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "inbound-port",
+      "repeat": 1,
+      "latency_ms": 0.009875002433545887,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "shell-to-argv",
+      "repeat": 1,
+      "latency_ms": 0.019500002963468432,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "file-path-validation",
+      "repeat": 1,
+      "latency_ms": 0.018582999473437667,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "delete-guard",
+      "repeat": 1,
+      "latency_ms": 0.015875004464760423,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "temporary-list",
+      "repeat": 1,
+      "latency_ms": 0.007458002073690295,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "unseen-middleware",
+      "repeat": 1,
+      "latency_ms": 0.010082992957904935,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "conflicting-policy-contract",
+      "repeat": 1,
+      "latency_ms": 0.010375006240792572,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "protected-new-route",
+      "repeat": 1,
+      "latency_ms": 0.013791999663226306,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "ui-colour",
+      "repeat": 2,
+      "latency_ms": 0.01041700306814164,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "ui-misleading-comment",
+      "repeat": 2,
+      "latency_ms": 0.01925000105984509,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "mfa-on",
+      "repeat": 2,
+      "latency_ms": 0.011041993275284767,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "login-colour",
+      "repeat": 2,
+      "latency_ms": 0.010208008461631835,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "tenant-filter-removed",
+      "repeat": 2,
+      "latency_ms": 0.015416997484862804,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "tenant-filter-fix",
+      "repeat": 2,
+      "latency_ms": 0.015833007637411356,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "injection-tenant",
+      "repeat": 2,
+      "latency_ms": 0.021750005544163287,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "permission-expanded",
+      "repeat": 2,
+      "latency_ms": 0.01200000406242907,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "permission-reduced",
+      "repeat": 2,
+      "latency_ms": 0.011374999303370714,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "pii-logging",
+      "repeat": 2,
+      "latency_ms": 0.015208002878353,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "opaque-logging",
+      "repeat": 2,
+      "latency_ms": 0.010957999620586634,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "egress-host",
+      "repeat": 2,
+      "latency_ms": 0.01704200985841453,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "inbound-port",
+      "repeat": 2,
+      "latency_ms": 0.009750001481734216,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "shell-to-argv",
+      "repeat": 2,
+      "latency_ms": 0.01895899185910821,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "file-path-validation",
+      "repeat": 2,
+      "latency_ms": 0.017749989638105035,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "delete-guard",
+      "repeat": 2,
+      "latency_ms": 0.015583005733788013,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "temporary-list",
+      "repeat": 2,
+      "latency_ms": 0.014541990822181106,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "unseen-middleware",
+      "repeat": 2,
+      "latency_ms": 0.009916999260894954,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "conflicting-policy-contract",
+      "repeat": 2,
+      "latency_ms": 0.010624993592500687,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    {
+      "id": "protected-new-route",
+      "repeat": 2,
+      "latency_ms": 0.024541994207538664,
+      "success": true,
+      "input_tokens": null,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    }
+  ],
+  "limitations": [
+    "Only repeat zero is scored; repeats are timing samples.",
+    "Warm includes every request after the first, including failures; inspect errors.",
+    "Load plus first excludes interpreter startup, downloads, and remote server startup.",
+    "Peak RSS is this client's process lifetime high-water mark, not remote/GPU memory.",
+    "No model is calibrated for sev; calibration metrics assess raw scores.",
+    "Authored/provisional smoke data cannot establish utility or generalisation."
+  ]
+}

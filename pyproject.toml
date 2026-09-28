@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sev-research"
+version = "0.1.0"
+description = "Research harness for security judgments over engineering changes"
+requires-python = ">=3.11"
+readme = "README.md"
+license = "Apache-2.0"
+dependencies = []
+
+[project.optional-dependencies]
+mlx = ["mlx-lm==0.31.3; sys_platform == 'darwin' and platform_machine == 'arm64'"]
+
+[project.scripts]
+sev = "sev.cli:main"
+
+[tool.setuptools]
+packages = ["sev"]
