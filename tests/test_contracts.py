@@ -1,4 +1,6 @@
 import copy
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -20,6 +22,27 @@ class ContractTests(unittest.TestCase):
         for text in ('{"x":1,"x":2}', '{"p":NaN}', '{"p":Infinity}'):
             with self.assertRaises(ValueError):
                 loads(text)
+
+    def test_jsonl_preserves_unicode_separators_and_record_numbers(self):
+        records = [{"diff": "literal " + separator + " content"}
+                   for separator in ("\u2028", "\u2029", "\u0085", "\f", "\v")]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "unicode.jsonl"
+            content = "\r\n".join(json.dumps(row, ensure_ascii=False) for row in records) + "\r\n"
+            path.write_text(content)
+            self.assertEqual(read_jsonl(path), records)
+            path.write_text(content + "invalid json\n")
+            with self.assertRaisesRegex(ValueError, r":6:"):
+                read_jsonl(path)
+
+    def test_additional_context_yes_requires_missing_fact(self):
+        row = read_jsonl(DATA)[0]
+        label = row["judgments"]["ADDITIONAL_CONTEXT_REQUIRED"]
+        label["state"] = "YES"
+        with self.assertRaisesRegex(ValueError, "name the missing fact"):
+            validate_dataset([row])
+        label["missing_context"] = ["PRIVILEGE_INCREASE: inherited role policy"]
+        validate_dataset([row])
 
     def test_probability_contract(self):
         good = {"AUTHORIZATION_RELEVANT": one_hot("YES")}
@@ -81,6 +104,23 @@ class ContractTests(unittest.TestCase):
         row = read_jsonl(DATA)[0]
         result, _ = Rules().predict(row["input"], ["PRIVILEGE_INCREASE"])
         self.assertIsNone(result["PRIVILEGE_INCREASE"]["probabilities"])
+
+    def test_rules_preserve_header_like_content_inside_hunks(self):
+        # A lexical indicator, including one in a comment, is not a vulnerability.
+        for content in ("--- DROP TABLE users", "+++ DROP TABLE users", "--- a/DROP TABLE users"):
+            old_count, new_count = (1, 0) if content.startswith("-") else (0, 1)
+            diff = ("--- a/first.sql\n+++ b/first.sql\n"
+                    f"@@ -1,{old_count} +1,{new_count} @@\n{content}\n"
+                    "--- a/second.sql\n+++ b/second.sql\n@@ -1 +1 @@\n-x\n+y\n")
+            with self.subTest(content=content):
+                prediction, _ = Rules().predict({"diff": diff, "context": []}, ["DESTRUCTIVE_OPERATION"])
+                self.assertEqual(prediction["DESTRUCTIVE_OPERATION"], one_hot("YES"))
+
+    def test_rules_ignore_headers_in_multiple_file_diff(self):
+        diff = ("--- a/DROP TABLE first\n+++ b/DROP TABLE first\n@@ -1 +1 @@\n-x\n+y\n"
+                "--- a/DROP TABLE second\n+++ b/DROP TABLE second\n@@ -1 +1 @@\n-x\n+y\n")
+        prediction, _ = Rules().predict({"diff": diff, "context": []}, ["DESTRUCTIVE_OPERATION"])
+        self.assertIsNone(prediction["DESTRUCTIVE_OPERATION"]["probabilities"])
 
 
 class MetricTests(unittest.TestCase):

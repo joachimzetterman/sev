@@ -36,7 +36,7 @@ def loads(text):
 
 def read_jsonl(path):
     rows = []
-    for index, line in enumerate(Path(path).read_text().splitlines(), 1):
+    for index, line in enumerate(Path(path).read_text().split("\n"), 1):
         if line.strip():
             try:
                 row = loads(line)
@@ -94,7 +94,7 @@ def one_hot(state):
 
 
 def validate_dataset(rows):
-    ids, groups, projects, commits, diffs = set(), {}, {}, {}, {}
+    ids, groups, projects, diffs = set(), {}, {}, {}
     for row in rows:
         required = {"schema_version", "taxonomy_version", "id", "split", "group_id", "source", "input", "judgments", "annotation"}
         if set(row) != required:
@@ -124,11 +124,6 @@ def validate_dataset(rows):
             if key in table and table[key] != split:
                 raise ValueError(f"cross-split contamination: {key}")
             table[key] = split
-        if source["revision"]:
-            key = (source["project"], source["revision"])
-            if key in commits and commits[key] != split:
-                raise ValueError("commit crosses splits")
-            commits[key] = split
         judgments = row["judgments"]
         if not isinstance(judgments, dict) or not judgments or not set(judgments) <= set(EVALS):
             raise ValueError("judgments must be a nonempty subset of taxonomy evals")
@@ -140,7 +135,9 @@ def validate_dataset(rows):
             for field in ("evidence", "missing_context"):
                 if not isinstance(label[field], list) or not all(isinstance(v, str) and v for v in label[field]):
                     raise ValueError(f"{name}: {field} must contain strings")
-            if label["state"] == "INSUFFICIENT_CONTEXT" and not label["missing_context"]:
+            needs_context = label["state"] == "INSUFFICIENT_CONTEXT" or (
+                name == "ADDITIONAL_CONTEXT_REQUIRED" and label["state"] == "YES")
+            if needs_context and not label["missing_context"]:
                 raise ValueError(f"{name}: name the missing fact")
             if label["state"] in ("YES", "NO") and not label["evidence"]:
                 raise ValueError(f"{name}: evidence is required")

@@ -61,13 +61,30 @@ class Rules:
     }
 
     def predict(self, value, names):
-        changed = "\n".join(line[1:] for line in value["diff"].splitlines()
-                            if line[:1] in ("+", "-") and not line.startswith(("+++", "---")))
+        changed = "\n".join(changed_lines(value["diff"]))
         result = {}
         for name in names:
             pattern = self.patterns.get(name)
             result[name] = one_hot("YES") if pattern and re.search(pattern, changed) else {"probabilities": None}
         return result, {"input_tokens": None, "output_tokens": 0, "cost_usd": 0.0}
+
+
+def changed_lines(diff):
+    """Distinguish file headers from header-like content using hunk counts."""
+    before = after = 0
+    for line in diff.split("\n"):
+        hunk = re.match(r"^@@ -\d+(?:,(\d+))? \+\d+(?:,(\d+))? @@", line)
+        if hunk:
+            before, after = (int(n) if n is not None else 1 for n in hunk.groups())
+            continue
+        in_hunk = before > 0 or after > 0
+        if not in_hunk and line.startswith(("--- ", "+++ ")):
+            continue
+        if line[:1] in ("+", "-"):
+            yield line[1:]
+        if in_hunk:
+            before -= int(line[:1] in (" ", "-"))
+            after -= int(line[:1] in (" ", "+"))
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -141,11 +158,15 @@ class HTTP:
                     raise ValueError("incomplete model response")
                 prediction = loads(choice["message"]["content"])
             validate_prediction(prediction, names)
-            usage = result.get("usage", {})
+            usage = result.get("usage")
+            if usage is None:
+                usage = {}
+            if not isinstance(usage, dict):
+                raise ValueError("invalid inference usage")
             return prediction, {"input_tokens": usage.get("prompt_tokens", usage.get("input_tokens")),
                                 "output_tokens": usage.get("completion_tokens") if not self.kev else 0,
                                 "cost_usd": None}
-        except (KeyError, TypeError, IndexError, ValueError):
+        except (KeyError, TypeError, IndexError, ValueError, AttributeError):
             raise ValueError("invalid or incomplete structured model response") from None
 
 

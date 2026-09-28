@@ -14,8 +14,8 @@ def label(state, reason, evidence=None, missing=None):
     return {"state": state, "rationale": reason, "evidence": evidence or [], "missing_context": missing or []}
 
 
-def yes(reason, evidence):
-    return label("YES", reason, [evidence])
+def yes(reason, evidence, missing=None):
+    return label("YES", reason, [evidence], missing)
 
 
 def no(reason, evidence):
@@ -61,7 +61,8 @@ def main():
         "AUTHORIZATION_BOUNDARY_CHANGE": yes("An explicit tenant gate is removed.", "where(tenant_id=principal.tenant_id) removed"),
         "TENANT_BOUNDARY_CHANGE": yes("Tenant isolation in resource selection changes.", "tenant_id filter removed"),
         "PRIVILEGE_INCREASE": insufficient("Other enforcement layers may still constrain effective access.", "Database RLS and route authorization policies."),
-        "ADDITIONAL_CONTEXT_REQUIRED": yes("Effective privilege needs the other access layers.", "PRIVILEGE_INCREASE cannot be resolved from this query alone")}, group="tenant")
+        "ADDITIONAL_CONTEXT_REQUIRED": yes("Effective privilege needs the other access layers.", "PRIVILEGE_INCREASE cannot be resolved from this query alone",
+                                           ["PRIVILEGE_INCREASE: database RLS and route authorization policies."])}, group="tenant")
     add("tenant-filter-fix", 'return db.invoices.get(id)\n', 'return db.invoices.where(tenant_id=principal.tenant_id).get(id)\n', {
         "AUTHORIZATION_RELEVANT": yes("A correct isolation fix remains authorization-relevant.", "tenant filter added"),
         "TENANT_BOUNDARY_CHANGE": yes("Adds explicit tenant selection.", "tenant_id=principal.tenant_id"),
@@ -84,7 +85,8 @@ def main():
     add("opaque-logging", 'logger.info("request complete")\n', 'logger.info(payload)\n', {
         "DATA_EXPOSURE_CHANGE": yes("A payload replaces a constant on the log surface.", "logger.info(payload)"),
         "SENSITIVE_DATA_HANDLING": insufficient("The payload's sensitivity is not established.", "payload schema/data classification"),
-        "ADDITIONAL_CONTEXT_REQUIRED": yes("Sensitivity depends on the missing payload schema.", "payload has no supplied schema")})
+        "ADDITIONAL_CONTEXT_REQUIRED": yes("Sensitivity depends on the missing payload schema.", "payload has no supplied schema",
+                                           ["SENSITIVE_DATA_HANDLING: payload schema/data classification."])})
     add("egress-host", 'requests.post("https://internal.example/events", json=event)\n', 'requests.post("https://vendor.example/events", json=event)\n', {
         "NETWORK_EGRESS_CHANGE": yes("Outbound destination changes.", "internal.example -> vendor.example"),
         "TRUST_BOUNDARY_CHANGE": yes("Events move to a separately controlled external processor.", "supplied ownership contract"),
@@ -114,7 +116,8 @@ def main():
         "AUTHORIZATION_RELEVANT": yes("An access-control enforcement point changes.", "require_owner removed"),
         "AUTHORIZATION_BOUNDARY_CHANGE": yes("An explicit route enforcement point is removed; effective privilege is a separate question.", "require_owner removed from route"),
         "PRIVILEGE_INCREASE": insufficient("Effective permission depends on unseen middleware.", "middleware implementation and route binding"),
-        "ADDITIONAL_CONTEXT_REQUIRED": yes("Unseen enforcement determines effective access.", "ownership check removed; migration contract names middleware")},
+        "ADDITIONAL_CONTEXT_REQUIRED": yes("Unseen enforcement determines effective access.", "ownership check removed; migration contract names middleware",
+                                           ["PRIVILEGE_INCREASE: middleware implementation and route binding."])},
         context=[{"path": "migration.txt", "content": "The intended change moves ownership enforcement into newly added middleware. Its implementation and binding are not included."}])
     add("conflicting-policy-contract", 'access_mode = "legacy"\n', 'access_mode = "new"\n', {
         "PRIVILEGE_INCREASE": label("UNKNOWN", "The two supplied authoritative descriptions directly disagree.", ["contract-a and contract-b conflict"]),

@@ -29,6 +29,9 @@ Example judgment:
 
 Evidence is a human annotation locator/description in v0.1. It is not yet a
 validated machine span. Empty/absent annotations mean unlabelled, never NO.
+Both `INSUFFICIENT_CONTEXT` and `ADDITIONAL_CONTEXT_REQUIRED=YES` require a
+nonempty `missing_context` list. For the latter, name the affected eval alongside
+the missing fact; annotators must check that the fact would decide that question.
 Future span annotations should use side (`before`/`after`/context path), line
 numbers and content hashes. Source metadata, CVE descriptions, commit messages,
 gold rationales and raters must stay outside model input: they can reveal labels.
@@ -72,7 +75,7 @@ support. Reserve an additional later-time, unseen-project panel. Aim for at leas
 plus meaningful missing-context and ambiguous cases; sparse labels must report
 wide uncertainty rather than a headline score.
 
-The validator rejects repeated IDs, cross-split projects/groups/commits and exact
+The validator rejects repeated IDs, cross-split projects/groups and exact
 diff duplicates after removing hunk coordinates. It also requires adjudication
 and two rater identifiers on `test`. This enforces metadata, not the honesty of
 an annotation. It cannot detect undocumented forks, near duplicates, shared
@@ -80,6 +83,7 @@ synthetic templates, or foundation-model pretraining exposure. Curate a manifest
 that connects those families, perform near-duplicate review before freezing,
 and disclose unknown pretraining contamination. Normalizing whitespace alone is
 unsafe for languages where whitespace changes semantics.
+Project isolation also prevents commits of the same project crossing splits.
 
 Freeze dataset/taxonomy/prompt hashes, evaluation code, threshold choices and
 model snapshots before opening test results. All prompt examples come from

@@ -10,7 +10,7 @@ from pathlib import Path
 from .backends import HTTP, MLX, Rules
 from .classifier import NaiveBayes, fit
 from .contracts import MAX_INPUT_BYTES, SCHEMA_VERSION, digest, dumps, loads, read_jsonl, validate_dataset, validate_input, validate_prediction
-from .experiment import evaluate
+from .experiment import evaluate, write_results
 from .metrics import agreement
 from .taxonomy import VERSION, contract, select
 
@@ -66,7 +66,7 @@ def parser():
         backend_args(cmd)
         if command == "eval":
             cmd.add_argument("input", nargs="?", default="-")
-            cmd.add_argument("--context", help="JSON list of explicitly supplied path/content objects")
+            cmd.add_argument("--context", help="path to a JSON file containing a list of supplied path/content objects")
         else:
             cmd.add_argument("--staged", action="store_true", help="compare index to HEAD; default is unstaged")
     bench = commands.add_parser("bench", help="score a selected dataset partition; persist report and predictions")
@@ -81,7 +81,7 @@ def parser():
 def main(argv=None):
     args_list = list(sys.argv[1:] if argv is None else argv)
     # `git diff | sev --backend ...` is a shorthand for `sev eval - ...`.
-    if not args_list or (args_list[0].startswith("--") and args_list[0] not in ("--help",)):
+    if not args_list or args_list[0] == "-" or (args_list[0].startswith("--") and args_list[0] != "--help"):
         args_list.insert(0, "eval")
     args = parser().parse_args(args_list)
     try:
@@ -109,8 +109,7 @@ def main(argv=None):
                     raise ValueError("requested split is empty")
                 if args.repeats < 1:
                     raise ValueError("repeats must be positive")
-                if args.out.exists():
-                    raise ValueError("output directory already exists; use a new run identifier")
+                args.out.mkdir(parents=True, exist_ok=False)
             else:
                 if args.command == "diff":
                     command = ["git", "--no-pager", "diff", "--no-ext-diff", "--no-textconv", "--no-color"]
@@ -130,9 +129,7 @@ def main(argv=None):
             load_ms = (time.perf_counter() - started) * 1000
             if args.command == "bench":
                 output, predictions = evaluate(rows, backend, names, repeats=args.repeats, load_ms=load_ms)
-                args.out.mkdir(parents=True, exist_ok=False)
-                (args.out / "report.json").write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-                (args.out / "predictions.jsonl").write_text("".join(dumps(row) + "\n" for row in predictions))
+                write_results(args.out, output, predictions)
                 print(dumps({"report": str(args.out / "report.json"), "records": len(rows), "errors": len(output["errors"])}))
                 return 1 if output["errors"] else 0
             prediction, stats = backend.predict(value, names)

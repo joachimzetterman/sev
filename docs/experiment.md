@@ -52,7 +52,9 @@ does not yet import tool findings automatically.
 
 For A2, Naive Bayes uses token counts with Laplace smoothing, one four-class
 classifier per eval, and only explicitly annotated training examples. It can
-reveal shortcut learning. A later TF-IDF/logistic-regression comparison should use
+reveal shortcut learning. Log priors and sparse log likelihoods are cached at
+model load; this trades initialization work and memory for cheaper predictions.
+A later TF-IDF/logistic-regression comparison should use
 the identical grouped splits and calibration protocol. Training on smoke data is
 forbidden by the fit command.
 
@@ -102,6 +104,9 @@ endpoint. The exact candidates are in [the baseline manifest](../experiments/bas
 Cloud inference remains a separate, explicitly selected experiment; the local
 runtime has no Modal dependency. Record billed duration and startup time when a
 cloud comparison is eventually authorised.
+The runner adapts its server samples into the same report builder and artifact
+writer used by local evaluation. Contract tests use a fake Modal SDK and recorded
+sample fixtures; they do not establish that cloud inference works.
 
 ## Scoring contract
 
@@ -146,9 +151,13 @@ remaining beyond the current smoke scorer.
 Reports record per-call latency, first evaluation, model initialization, load plus
 first evaluation, warm p50/p95, peak client RSS, input throughput when available,
 MLX device allocation high-water mark, failure counts and buckets by diff bytes.
-`load_plus_first_eval_ms` excludes interpreter startup and model download, and
-includes file hashing. It is not remote server cold start. Remote server startup
-and memory are null until separately measured. Local inference cost is unknown
+`timing_scope` and `model_load_scope` identify the measured boundaries. For local
+MLX, `load_plus_first_eval_ms` excludes interpreter startup and model download,
+and includes file hashing. Modal's server load measurement includes model
+download/initialization, while its per-request samples exclude RPC and image
+startup. Neither is a complete remote server cold start. Client environment/RSS
+and server runtime/GPU/RSS remain separately identified; unmeasured server
+startup/memory fields are null. Local inference cost is unknown
 unless a documented electricity/hardware or GPU-hour rate is supplied; no API
 charge does not mean zero total cost. Rules report zero metered inference charge.
 
@@ -169,6 +178,7 @@ batching, quantizing further or adding retrieval.
 
 ```text
 git diff | uv run sev --backend MODEL
+git diff | uv run sev - --backend MODEL
 uv run sev eval change.diff --backend MODEL [--context snippets.json]
 uv run sev diff --backend MODEL          # unstaged, tracked changes
 uv run sev diff --staged --backend MODEL # index versus HEAD
@@ -179,6 +189,9 @@ implicitly included. Empty input, over-budget input and invalid outputs fail
 explicitly. No pass/fail security gate, automatic fixes, long review text or
 invented context paths. Exit 0 means the requested operation completed, 1 means
 a benchmark contains backend failures, and 2 means an input/configuration error.
+`--context` takes a JSON file path, not inline JSON. Benchmark runs reserve a new
+output directory before loading a model or starting inference. A failed startup
+can leave an empty directory; inspect it and choose a fresh run identifier.
 
 Inference output uses an envelope with schema/taxonomy/model information and
 per-eval state distributions. The output never contains a `secure` field.

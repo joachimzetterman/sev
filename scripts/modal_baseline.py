@@ -5,17 +5,16 @@ MODAL_PROFILE=chosen-profile uv run --with modal==1.5.5 python -m scripts.modal_
 """
 
 import argparse
-import json
 import os
 import time
 from pathlib import Path
 
 import modal
 
-from sev.backends import messages, prompt_fingerprint
-from sev.contracts import SCHEMA_VERSION, digest, dumps, loads, read_jsonl, validate_dataset, validate_prediction
-from sev.metrics import percentile, summarize
-from sev.taxonomy import EVALS, VERSION
+from sev.backends import messages
+from sev.contracts import digest, dumps, loads, read_jsonl, validate_dataset, validate_prediction
+from sev.experiment import build_report, write_results
+from sev.taxonomy import EVALS
 
 MODEL = "Qwen/Qwen3.5-27B"
 REVISION = "fc05daec18b0a78c049392ed2e771dde82bdf654"
@@ -68,6 +67,34 @@ def infer(prompts, names):
             "runtime_versions": {name: importlib.metadata.version(name) for name in ("vllm", "torch", "transformers")}}
 
 
+def report_remote(rows, names, result, wall_ms):
+    """Adapt recorded server samples to the common report contract; no RPC here."""
+    samples = result["samples"]
+    if len(samples) != len(rows):
+        raise ValueError("incomplete cloud experiment")
+    predictions = [{"id": row["id"], "input_hash": digest(row["input"]),
+                    "judgments": sample["judgments"], "error_type": sample["error_type"]}
+                   for row, sample in zip(rows, samples)]
+    timing = [{"id": row["id"], "repeat": 0, "success": sample["error_type"] is None,
+               **{key: sample[key] for key in ("latency_ms", "error_type", "input_tokens", "output_tokens")}}
+              for row, sample in zip(rows, samples)]
+    metadata = {"model": MODEL, "revision": REVISION, "backend": "modal-vllm", "dtype": "bfloat16",
+                "temperature": 0, "thinking": False, "prefix_cache": False, "vllm": VLLM,
+                "probability_kind": "self_reported", "calibrated": False}
+    report = build_report(rows, metadata, names, predictions, timing, load_ms=result["model_load_ms"],
+                          timing_scope="server_tokenization_and_generation",
+                          load_scope="server_model_download_and_initialization",
+                          source_paths={"scripts/modal_baseline.py": Path(__file__).resolve()})
+    report["performance"].update({key: result[key] for key in (
+        "server_peak_rss_bytes", "gpu_name", "allocated_gpu_memory_bytes", "runtime_versions")})
+    report["performance"]["client_wall_including_image_startup_ms"] = wall_ms
+    report["limitations"].extend([
+        "Server latency excludes RPC; local baseline used a different runtime and machine.",
+        "20-minute per-job timeout bounds GPU work, not image-build cost or exact invoice.",
+        "Actual billed cost must be obtained from the selected Modal workspace."])
+    return report, predictions
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", required=True)
@@ -75,45 +102,19 @@ def main():
     args = parser.parse_args()
     if not os.environ.get("MODAL_PROFILE"):
         parser.error("set MODAL_PROFILE explicitly to choose the billing account")
-    if args.out.exists():
-        parser.error("output directory exists")
     rows = validate_dataset(read_jsonl(args.data))
     if len(rows) > 20 or any(r["split"] != "smoke" or r["source"]["kind"] != "authored" for r in rows):
         parser.error("this first cloud experiment accepts at most 20 authored smoke examples")
+    try:
+        args.out.mkdir(parents=True, exist_ok=False)
+    except OSError:
+        parser.error("cannot reserve output directory; choose a new writable path")
     names = list(EVALS)
     started = time.perf_counter()
     with modal.enable_output(), app.run():
         result = infer.remote([messages(row["input"], names) for row in rows], names)
-    wall_ms = (time.perf_counter() - started) * 1000
-    samples = result.pop("samples")
-    if len(samples) != len(rows):
-        raise ValueError("incomplete cloud experiment")
-    timing = [{"id": row["id"], **{key: value for key, value in sample.items() if key != "judgments"}}
-              for row, sample in zip(rows, samples)]
-    latencies = [sample["latency_ms"] for sample in samples]
-    source_root = Path(__file__).resolve().parents[1]
-    report = {"schema_version": SCHEMA_VERSION, "taxonomy_version": VERSION, "dataset_hash": digest(rows),
-              "records": len(rows), "splits": {"smoke": len(rows)}, "repeats": 1,
-              "prompt_hash": prompt_fingerprint(names),
-              "source_hashes": {str(path.relative_to(source_root)): digest(path.read_text())
-                                for path in [*sorted((source_root / "sev").glob("*.py")), Path(__file__).resolve()]},
-              "model": {"model": MODEL, "revision": REVISION, "backend": "modal-vllm", "dtype": "bfloat16",
-                        "temperature": 0, "thinking": False, "prefix_cache": False, "vllm": VLLM,
-                        "probability_kind": "self_reported", "calibrated": False},
-              "per_eval": {name: summarize([(row["judgments"][name]["state"], sample["judgments"][name]["probabilities"])
-                                             for row, sample in zip(rows, samples) if name in row["judgments"]]) for name in names},
-              "performance": {**result, "client_wall_including_image_startup_ms": wall_ms,
-                              "first_eval_ms": latencies[0], "warm_p50_ms": percentile(latencies[1:], .5),
-                              "warm_p95_ms": percentile(latencies[1:], .95), "inference_cost_usd": None},
-              "timing": timing, "errors": [r for r in timing if r["error_type"]],
-              "limitations": ["Provisional smoke labels; no independent quality evidence.",
-                              "Server latency excludes RPC; local baseline used a different runtime and machine.",
-                              "20-minute per-job timeout bounds GPU work, not image-build cost or exact invoice.",
-                              "Actual billed cost must be obtained from the selected Modal workspace."]}
-    args.out.mkdir(parents=True, exist_ok=False)
-    (args.out / "report.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
-    (args.out / "predictions.jsonl").write_text("".join(dumps({"id": row["id"], "input_hash": digest(row["input"]),
-        "judgments": sample["judgments"], "error_type": sample["error_type"]}) + "\n" for row, sample in zip(rows, samples)))
+    report, predictions = report_remote(rows, names, result, (time.perf_counter() - started) * 1000)
+    write_results(args.out, report, predictions)
     print(dumps({"report": str(args.out / "report.json"), "errors": len(report["errors"])}))
     return 1 if report["errors"] else 0
 

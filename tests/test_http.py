@@ -26,6 +26,22 @@ class HTTPTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "incomplete"):
             self.request({"choices": [{"finish_reason": "length", "message": {"content": "{}"}}]})
 
+    def test_null_usage_preserves_valid_prediction(self):
+        prediction = {"PRIVILEGE_INCREASE": one_hot("NO")}
+        result, stats = self.request({"choices": [{"finish_reason": "stop", "message": {"content": json.dumps(prediction)}}],
+                                      "usage": None})
+        self.assertEqual(result, prediction)
+        self.assertIsNone(stats["input_tokens"])
+        self.assertIsNone(stats["output_tokens"])
+
+    def test_malformed_response_shapes_are_safe_errors(self):
+        for response, kev in ((None, False), ({"choices": ["private provider text"]}, False),
+                              ({"choices": []}, False), ({"answers": []}, True),
+                              ({"answers": {"PRIVILEGE_INCREASE": None}}, True)):
+            with self.subTest(response=response, kev=kev), self.assertRaisesRegex(
+                    ValueError, "^invalid or incomplete structured model response$"):
+                self.request(response, kev=kev)
+
     def test_no_prose_repair_or_missing_eval_imputation(self):
         for content in ("Everything is safe", "{}", "```json\n{}\n```"):
             with self.assertRaises(ValueError):

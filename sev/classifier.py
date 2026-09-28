@@ -62,29 +62,43 @@ class NaiveBayes:
             raise ValueError("invalid classifier artifact") from None
         self.metadata = {"backend": "nb", "model": "bag-of-words-naive-bayes-0.1", "revision": digest(data),
                          "training_hash": data["training_hash"], "probability_kind": "naive_bayes_posterior", "calibrated": False}
+        self.training_projects = set(data["training_projects"])
+        self.training_groups = set(data["training_groups"])
+        self.training_inputs = set(data["training_inputs"])
+        self.parameters = {}
+        for name in EVALS:
+            examples = data["examples"][name]
+            total = sum(examples.values())
+            if not total:
+                continue
+            self.parameters[name] = []
+            for state in STATES:
+                counts = data["counts"][name][state]
+                denominator = sum(counts.values()) + len(self.vocabulary)
+                prior = math.log((examples[state] + 1) / (total + len(STATES)))
+                likelihoods = {term: math.log((count + 1) / denominator)
+                               for term, count in counts.items() if term in self.vocabulary}
+                self.parameters[name].append((prior, likelihoods, math.log(1 / denominator)))
 
     def check_evaluation(self, rows):
         for row in rows:
-            if (row["source"]["project"] in self.artifact["training_projects"]
-                    or row["group_id"] in self.artifact["training_groups"]
-                    or digest(row["input"]) in self.artifact["training_inputs"]):
+            if (row["source"]["project"] in self.training_projects
+                    or row["group_id"] in self.training_groups
+                    or digest(row["input"]) in self.training_inputs):
                 raise ValueError("classifier evaluation overlaps training provenance")
 
     def predict(self, value, names):
         terms, result = tokens(value), {}
+        known = [(term, count) for term, count in terms.items() if term in self.vocabulary]
         for name in names:
-            examples = self.artifact["examples"][name]
-            if not sum(examples.values()):
+            parameters = self.parameters.get(name)
+            if parameters is None:
                 result[name] = {"probabilities": None}
                 continue
-            logits = []
-            for state in STATES:
-                counts = self.artifact["counts"][name][state]
-                denominator = sum(counts.values()) + len(self.vocabulary)
-                score = math.log((examples[state] + 1) / (sum(examples.values()) + len(STATES)))
-                score += sum(count * math.log((counts.get(term, 0) + 1) / denominator)
-                             for term, count in terms.items() if term in self.vocabulary)
-                logits.append(score)
-            weights = [math.exp(score - max(logits)) for score in logits]
-            result[name] = {"probabilities": {state: weight / sum(weights) for state, weight in zip(STATES, weights)}}
+            logits = [prior + sum(count * likelihoods.get(term, unseen) for term, count in known)
+                      for prior, likelihoods, unseen in parameters]
+            maximum = max(logits)
+            weights = [math.exp(score - maximum) for score in logits]
+            total = sum(weights)
+            result[name] = {"probabilities": {state: weight / total for state, weight in zip(STATES, weights)}}
         return result, {"input_tokens": sum(terms.values()), "output_tokens": 0, "cost_usd": None}

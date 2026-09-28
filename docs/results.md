@@ -17,11 +17,18 @@ not alter inference behaviour.
 - Hardware: Apple M4 Pro, 24 GiB unified memory. Local Metal execution.
 - Ordinary model: `mlx-community/Qwen3-0.6B-4bit`, snapshot `73e3e38d981303bc594367cd910ea6eb48349da8`.
 - Runtime: `uv.lock`, MLX LM 0.31.3; four next-token letters, thinking disabled, separate full prefill for every question.
-- Dataset: `data/smoke.jsonl`; all provisional annotations, development-only.
+- Dataset: [archived smoke snapshot](../results/2026-09-27/smoke.jsonl); all provisional annotations, development-only.
 - Small model: two complete timing passes; only pass zero scored. Rules: three timing passes.
 - No context retrieval, prompt tuning after results, fine-tuning, cache reuse, or generated security review.
 
 Exact per-eval confusion matrices, calibration bins, timing samples, source hashes, model-file hashes and environment metadata are in the [small-model report](../results/2026-09-27/qwen06b/report.json) and [rules report](../results/2026-09-27/rules/report.json). Both runs completed with zero backend failures. [Small-model predictions](../results/2026-09-27/qwen06b/predictions.jsonl) allow re-scoring.
+
+The 2026-09-28 review filled in missing facts for three
+`ADDITIONAL_CONTEXT_REQUIRED=YES` annotations in `data/smoke.jsonl`. Inputs and
+semantic states did not change, but the dataset hash did. The snapshot linked
+above preserves the exact original dataset hash; those historical annotations
+predate the stricter missing-context validation. Archived predictions and reports
+remain unchanged and do not measure the revised harness.
 
 ## Descriptive quality
 
