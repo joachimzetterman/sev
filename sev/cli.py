@@ -11,6 +11,7 @@ from .backends import HTTP, MLX, Rules
 from .classifier import NaiveBayes, fit
 from .contracts import MAX_INPUT_BYTES, SCHEMA_VERSION, digest, dumps, loads, read_jsonl, validate_dataset, validate_input, validate_prediction
 from .experiment import evaluate, write_results
+from .intake import reproduce, verify_batch
 from .metrics import agreement
 from .taxonomy import VERSION, contract, select
 
@@ -55,6 +56,13 @@ def parser():
     commands.add_parser("taxonomy", help="emit the versioned taxonomy and annotation examples")
     validate = commands.add_parser("validate", help="validate dataset and split isolation")
     validate.add_argument("data", nargs="+")
+    intake = commands.add_parser("intake", help="reproduce unlabelled development candidates from pinned local Git objects")
+    intake.add_argument("manifest", type=Path)
+    intake.add_argument("--repositories", type=Path, required=True, help="JSON file mapping project IDs to local repository paths")
+    intake.add_argument("--out", type=Path, required=True, help="new output directory; refuses overwrite")
+    verify = commands.add_parser("verify-intake", help="check candidate inputs and licenses against their manifest, offline")
+    verify.add_argument("manifest", type=Path)
+    verify.add_argument("directory", type=Path)
     train = commands.add_parser("fit-nb", help="fit the simple classifier on train data only")
     train.add_argument("data", nargs="+")
     train.add_argument("--out", type=Path, required=True)
@@ -93,6 +101,12 @@ def main(argv=None):
         elif args.command == "agreement":
             left, right = (validate_dataset(read_jsonl(path)) for path in (args.left, args.right))
             output = agreement(left, right)
+        elif args.command == "intake":
+            report = reproduce(loads(args.manifest.read_text()), loads(args.repositories.read_text()), args.out)
+            output = {key: report[key] for key in ("included", "excluded", "by_project", "manifest_hash", "candidates_hash")}
+            output["report"] = str(args.out / "report.json")
+        elif args.command == "verify-intake":
+            output = verify_batch(loads(args.manifest.read_text()), args.directory)
         elif args.command == "fit-nb":
             if args.out.exists():
                 raise ValueError("model output already exists")
