@@ -59,6 +59,14 @@ does not mean an experiment has run. Local inference remains the default, and
 remote input transfer requires the explicit endpoint/`--allow-remote` contract.
 Keep credentials, local caches and transient run outputs out of commits.
 
+## Pull request descriptions
+
+Keep descriptions brief: explain the problem and resulting change, then give
+relevant validation and material limitations. Prefer one or two short paragraphs
+or a few bullets. Describe the final implementation; replace outdated text
+instead of appending a running history. Link detailed research and benchmark
+reports instead of repeating them in the description.
+
 ## References by task
 
 - Choosing the next milestone: [research roadmap](docs/roadmap.md); update its
