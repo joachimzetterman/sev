@@ -65,6 +65,7 @@ compared with `--backend kev --endpoint http://127.0.0.1:8009` and its model/rev
 
 ## What is here
 
+- [Research roadmap](docs/roadmap.md): current evidence, next PR and milestone completion criteria.
 - [Agent contributor guidance](AGENTS.md): research scope, experiment contracts and validation commands.
 - [Kev architecture investigation](docs/kev.md): exact source revision, shared context, pointer readout, hybrid-backbone caveats and required security adaptations.
 - [Taxonomy and annotation guide](docs/taxonomy.md): 14 evals, definitions and four kinds of examples per eval.

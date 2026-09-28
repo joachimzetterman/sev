@@ -61,6 +61,8 @@ Keep credentials, local caches and transient run outputs out of commits.
 
 ## References by task
 
+- Choosing the next milestone: [research roadmap](docs/roadmap.md); update its
+  status and next deliverable when evidence or completed work changes the plan.
 - Taxonomy changes: [annotation guide](docs/taxonomy.md); definitions live in
   [sev/taxonomy.py](sev/taxonomy.py). Regenerate the guide with
   `uv run python scripts/render_taxonomy.py` when definitions change.
