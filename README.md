@@ -2,16 +2,33 @@
 
 **sev is an open security evaluation model built to run on every engineering change.**
 
-That is the project hypothesis. This repository currently contains a research
-prototype, **not a trained sev model or a security gate**. The first milestone is
-to determine whether small models make useful contextual security judgments over
-diffs at a worthwhile quality, latency and cost.
+That is the project hypothesis. This repository provides a **developer preview**
+using your configured local model or explicit inference endpoint. It does not
+ship a trained sev checkpoint or establish that a change is secure.
 
 The name means security eval / `security_eval()`, with architectural inspiration
 from the jev → kev → sev lineage. [Kev](https://github.com/jaredpalmer/kev) is a
 starting hypothesis; simpler classifiers and ordinary prompted models remain contenders.
 
-## Start the experiment
+## Try the preview
+
+Install with uv and configure an existing local model server once:
+
+```sh
+uv tool install .
+sev configure --backend chat --endpoint http://127.0.0.1:8000 \
+  --model MODEL_ID --revision MODEL_REVISION
+git diff | sev
+sev diff --staged
+sev diff --base origin/main --json
+```
+
+Use the model ID and revision your server serves. An already downloaded MLX
+snapshot is another local option. The [preview guide](docs/preview.md) covers
+setup, output formats and the Python `security_eval()` interface. There is no
+default checkpoint: the tested 0.6B baseline was too weak to recommend.
+
+## Run the research harness
 
 Use Python 3.11+ and [uv](https://docs.astral.sh/uv/):
 
@@ -27,8 +44,9 @@ uv run sev diff --staged --backend rules
 
 The `rules` backend is an intentionally weak lexical comparison, not Semgrep or
 a security model. A null distribution is an explicit abstention. One-hot rule
-indicators are not estimated probabilities. The CLI is experiment plumbing;
-there is no default model and no pass/fail security exit code.
+indicators are not estimated probabilities. There is no pass/fail security exit
+code. Terminal evaluations show readable states; redirected output and research
+commands emit JSON.
 
 [GitHub Actions](.github/workflows/ci.yml) runs the contract tests, dataset
 validation, rules smoke experiment and package build on Python 3.11 and 3.13.

@@ -4,6 +4,11 @@ sev is a research experiment: `git diff -> narrow security judgments`. The first
 milestone is evidence that a small specialised model is useful, accurate and
 cheap enough to justify the approach. There is no trained sev model yet.
 
+The immediate delivery priority is a usable developer preview with existing
+models. Independent annotation is not a prerequisite for preview workflow
+changes; it remains necessary for defensible model-quality claims. Keep setup
+simple and preserve uncertainty, explicit remote consent and honest provenance.
+
 ## Research scope
 
 - Prefer the smallest experiment that tests a hypothesis. Benchmark simpler
@@ -76,6 +81,7 @@ reports instead of repeating them in the description.
   `uv run python scripts/render_taxonomy.py` when definitions change.
 - Data acquisition or labeling: [dataset protocol](docs/dataset.md).
 - Backends, metrics or comparisons: [experiment protocol](docs/experiment.md).
+- Installation, CLI defaults or SDK: [developer preview](docs/preview.md).
 - Pointer architecture work: [Kev investigation](docs/kev.md).
 - Reporting conclusions: [measured results and limitations](docs/results.md).
 

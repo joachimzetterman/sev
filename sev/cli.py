@@ -1,4 +1,4 @@
-"""Minimal experiment interface. JSON on stdout; errors on stderr."""
+"""Developer preview and research commands; errors go to stderr."""
 
 import argparse
 import json
@@ -7,35 +7,28 @@ import sys
 import time
 from pathlib import Path
 
-from .backends import HTTP, MLX, Rules
-from .classifier import NaiveBayes, fit
-from .contracts import MAX_INPUT_BYTES, SCHEMA_VERSION, digest, dumps, loads, read_jsonl, validate_dataset, validate_input, validate_prediction
+from . import __version__
+from .api import render_text, security_eval
+from .classifier import fit
+from .contracts import MAX_INPUT_BYTES, digest, dumps, loads, read_jsonl, validate_dataset, validate_input
 from .experiment import evaluate, write_results
 from .metrics import agreement
-from .taxonomy import VERSION, contract, select
+from .settings import BACKENDS, DEFAULTS, create_backend, resolve_settings, save_settings
+from .taxonomy import contract, select
 
 
-def backend_args(parser):
-    parser.add_argument("--backend", choices=("rules", "nb", "mlx", "chat", "kev"), required=True)
+def backend_args(parser, required=False):
+    parser.add_argument("--backend", choices=BACKENDS, required=required)
     parser.add_argument("--model", help="local MLX directory or HTTP model identifier")
     parser.add_argument("--revision", help="operator-supplied immutable HTTP model revision")
-    parser.add_argument("--endpoint", default="http://127.0.0.1:8000", help="base URL without /v1")
-    parser.add_argument("--allow-remote", action="store_true", help="send this input to the specified HTTPS endpoint")
+    parser.add_argument("--endpoint", help="base URL without /v1; defaults to local port 8000")
+    parser.add_argument("--allow-remote", action="store_true", default=None, help="allow sending diffs to the specified HTTPS endpoint")
     parser.add_argument("--evals", help="comma-separated taxonomy IDs; defaults to all 14")
 
 
 def build_backend(args):
-    if args.backend == "rules":
-        return Rules()
-    if args.backend == "nb":
-        if not args.model:
-            raise ValueError("Naive Bayes requires --model with a fitted artifact")
-        return NaiveBayes(args.model)
-    if args.backend == "mlx":
-        if not args.model:
-            raise ValueError("MLX requires --model with a local snapshot directory")
-        return MLX(args.model)
-    return HTTP(args.endpoint, args.model, args.revision, args.allow_remote, kev=args.backend == "kev")
+    settings = resolve_settings({key: getattr(args, key) for key in DEFAULTS}, getattr(args, "config", None))
+    return create_backend(settings)
 
 
 def read_diff(path):
@@ -49,9 +42,36 @@ def read_diff(path):
     return text
 
 
+def git_diff(staged=False, base=None):
+    command = ["git", "-c", "core.fsmonitor=false", "--no-pager", "diff", "--no-ext-diff", "--no-textconv", "--no-color"]
+    if staged:
+        command.append("--cached")
+    if base is not None:
+        revisions = []
+        for ref in (base, "HEAD"):
+            result = subprocess.run(["git", "rev-parse", "--verify", "--end-of-options", ref + "^{commit}"],
+                                    capture_output=True, text=True, check=False, timeout=10)
+            if result.returncode:
+                raise ValueError("base and HEAD must resolve to local commits; fetch the base branch first")
+            revisions.append(result.stdout.strip())
+        common = subprocess.run(["git", "merge-base", *revisions], capture_output=True, text=True, check=False, timeout=10)
+        if common.returncode:
+            raise ValueError("base and HEAD have no available common ancestor")
+        command.extend([common.stdout.strip(), revisions[1]])
+    result = subprocess.run(command + ["--"], capture_output=True, text=True, check=False, timeout=30)
+    if result.returncode:
+        raise ValueError("git diff failed; run inside the repository to evaluate")
+    return result.stdout
+
+
 def parser():
-    root = argparse.ArgumentParser(description="sev research harness; no trained security model is shipped")
+    root = argparse.ArgumentParser(description="sev developer preview: security judgments over diffs using your configured model")
+    root.add_argument("--version", action="version", version=f"sev {__version__} (developer preview)")
     commands = root.add_subparsers(dest="command", required=True)
+    configure = commands.add_parser("configure", help="save inference settings once; no model is downloaded or contacted")
+    backend_args(configure, required=True)
+    configure.add_argument("--config", type=Path, help="settings file; default is the user's sev configuration")
+    configure.add_argument("--force", action="store_true", help="replace existing settings")
     commands.add_parser("taxonomy", help="emit the versioned taxonomy and annotation examples")
     validate = commands.add_parser("validate", help="validate dataset and split isolation")
     validate.add_argument("data", nargs="+")
@@ -64,13 +84,19 @@ def parser():
     for command in ("eval", "diff"):
         cmd = commands.add_parser(command)
         backend_args(cmd)
+        cmd.add_argument("--config", type=Path, help="explicit settings file; repository files are never loaded automatically")
+        formatting = cmd.add_mutually_exclusive_group()
+        formatting.add_argument("--json", dest="format", action="store_const", const="json", help="machine-readable output")
+        formatting.add_argument("--text", dest="format", action="store_const", const="text", help="readable judgments without confidence percentages")
+        cmd.add_argument("--context", help="JSON file containing a list of supplied path/content objects")
         if command == "eval":
             cmd.add_argument("input", nargs="?", default="-")
-            cmd.add_argument("--context", help="path to a JSON file containing a list of supplied path/content objects")
         else:
-            cmd.add_argument("--staged", action="store_true", help="compare index to HEAD; default is unstaged")
+            source = cmd.add_mutually_exclusive_group()
+            source.add_argument("--staged", action="store_true", help="compare index to HEAD; default is unstaged")
+            source.add_argument("--base", help="compare the merge base with this revision to HEAD (committed changes only)")
     bench = commands.add_parser("bench", help="score a selected dataset partition; persist report and predictions")
-    backend_args(bench)
+    backend_args(bench, required=True)
     bench.add_argument("data", nargs="+")
     bench.add_argument("--split", choices=("smoke", "dev", "calibration", "test"), required=True)
     bench.add_argument("--repeats", type=int, default=1)
@@ -81,12 +107,19 @@ def parser():
 def main(argv=None):
     args_list = list(sys.argv[1:] if argv is None else argv)
     # `git diff | sev --backend ...` is a shorthand for `sev eval - ...`.
-    if not args_list or args_list[0] == "-" or (args_list[0].startswith("--") and args_list[0] != "--help"):
+    if not args_list or args_list[0] == "-" or (args_list[0].startswith("--") and args_list[0] not in ("--help", "--version")):
         args_list.insert(0, "eval")
     args = parser().parse_args(args_list)
     try:
         if args.command == "taxonomy":
             output = contract()
+        elif args.command == "configure":
+            if args.evals:
+                raise ValueError("select evals when evaluating a diff; saved configuration always defaults to all evals")
+            settings = resolve_settings({key: getattr(args, key) for key in DEFAULTS})
+            path = save_settings(settings, args.config, args.force)
+            output = {"config": str(path), "backend": settings["backend"], "model": settings["model"],
+                      "remote_inference_authorized": settings["allow_remote"]}
         elif args.command == "validate":
             rows = validate_dataset([row for path in args.data for row in read_jsonl(path)])
             output = {"valid": True, "records": len(rows), "dataset_hash": digest(rows)}
@@ -111,17 +144,10 @@ def main(argv=None):
                     raise ValueError("repeats must be positive")
                 args.out.mkdir(parents=True, exist_ok=False)
             else:
+                context = loads(Path(args.context).read_text()) if args.context else []
                 if args.command == "diff":
-                    command = ["git", "--no-pager", "diff", "--no-ext-diff", "--no-textconv", "--no-color"]
-                    if args.staged:
-                        command.append("--cached")
-                    # The diff is data. Do not execute textconv or external diff drivers.
-                    proc = subprocess.run(command + ["--"], capture_output=True, text=True, check=False)
-                    if proc.returncode:
-                        raise ValueError("git diff failed; run inside the repository to evaluate")
-                    value = {"diff": proc.stdout, "context": []}
+                    value = {"diff": git_diff(args.staged, args.base), "context": context}
                 else:
-                    context = loads(Path(args.context).read_text()) if args.context else []
                     value = {"diff": read_diff(args.input), "context": context}
                 validate_input(value)
             started = time.perf_counter()
@@ -132,11 +158,15 @@ def main(argv=None):
                 write_results(args.out, output, predictions)
                 print(dumps({"report": str(args.out / "report.json"), "records": len(rows), "errors": len(output["errors"])}))
                 return 1 if output["errors"] else 0
-            prediction, stats = backend.predict(value, names)
-            output = {"schema_version": SCHEMA_VERSION, "taxonomy_version": VERSION, "input_hash": digest(value),
-                      "model": backend.metadata, "judgments": validate_prediction(prediction, names), "usage": stats}
+            output = security_eval(value["diff"], names, context=value["context"], backend=backend)
+            if args.format == "text" or (args.format is None and sys.stdout.isatty()):
+                print(render_text(output))
+                return 0
         print(json.dumps(output, indent=2, allow_nan=False))
         return 0
+    except subprocess.TimeoutExpired:
+        print("sev: git operation timed out", file=sys.stderr)
+        return 2
     except (ValueError, OSError, ImportError) as exc:
         print(f"sev: {exc}", file=sys.stderr)
         return 2
