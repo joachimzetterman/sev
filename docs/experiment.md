@@ -184,7 +184,10 @@ uv run sev diff --backend MODEL          # unstaged, tracked changes
 uv run sev diff --staged --backend MODEL # index versus HEAD
 ```
 
-JSON is always emitted; no `--json` switch is needed yet. Untracked files are not
+Benchmark commands always emit JSON. Evaluations show text on a terminal and
+JSON when redirected; use `--json` or `--text` to choose explicitly. The
+[developer preview](preview.md) adds saved defaults for ordinary evaluations;
+benchmarks continue to require explicit backend selection. Untracked files are not
 implicitly included. Empty input, over-budget input and invalid outputs fail
 explicitly. No pass/fail security gate, automatic fixes, long review text or
 invented context paths. Exit 0 means the requested operation completed, 1 means

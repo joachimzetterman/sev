@@ -1,12 +1,32 @@
 # Research roadmap
 
-Status reviewed: 2026-09-28. Update this file as milestones are completed or the
+Status reviewed: 2026-10-05. Update this file as milestones are completed or the
 evidence changes the plan. The linked protocols hold the detailed definitions;
 this file records the execution order and next deliverable.
 
 The milestone is to establish whether small models can make useful contextual
 security judgments over engineering diffs at worthwhile quality, latency and
-cost. A trained model or product release is not yet an established outcome.
+cost. A trained model remains an unproven outcome.
+
+## Immediate priority: usable developer preview
+
+The current priority is trying sev during real development. The
+[developer preview](preview.md) adds one-time inference configuration, terminal
+and JSON output, staged/base-branch diffs and an embeddable `security_eval()`.
+It uses existing backends and keeps local inference as the default deployment
+choice. It does not bundle a recommended checkpoint, claim calibrated confidence
+or introduce a security gate.
+
+Independent annotation and specialised training are no longer prerequisites for
+trying the tool. They remain prerequisites for credible model-quality claims.
+The next practical step is to configure a model and try representative changes,
+recording confusing judgments, missing context and end-to-end latency. Model
+generated feedback remains provisional. Avoid expanding the product until this
+small workflow proves useful.
+
+The real-diff intake and 32-candidate batch were merged in
+[PR #2](https://github.com/joachimzetterman/sev/pull/2) and are available alongside
+the preview. The research sequence below remains the longer-term plan.
 
 ## Current evidence
 
@@ -49,7 +69,7 @@ These intake criteria are met for the first batch. Remaining coverage limits
 include Python-framework bias, ORM-only SQL examples and unknown pretraining
 exposure. Review label coverage before expanding the pilot.
 
-## 2. Next milestone: validate the taxonomy through independent annotation
+## 2. Next research milestone: validate the taxonomy through independent annotation
 
 Two reviewers independently label the same supplied inputs using the
 [annotation guide](taxonomy.md). Retain their original annotations, measure
