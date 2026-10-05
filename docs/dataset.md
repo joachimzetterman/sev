@@ -1,5 +1,9 @@
 # Dataset and annotation protocol
 
+The [real-diff intake protocol](intake.md) and
+[first 32-candidate batch](../data/pilot-001/README.md) use a separate unlabelled
+contract. They cannot pass the annotated dataset validator or be trained on.
+
 ## Wire format
 
 One JSON object per line, schema `sev-0.1`, taxonomy `sev-taxonomy-0.1`.
@@ -92,8 +96,10 @@ being evaluated and call it independently labelled.
 
 ## Candidate public sources
 
-These are acquisition candidates, not imported examples or confirmed sev labels.
-Their existing vulnerability targets do not answer the proposed taxonomy.
+Most sources below remain acquisition candidates, not imported examples or
+confirmed sev labels. Existing vulnerability targets do not answer this taxonomy.
+Django is now represented in the unlabelled pilot, alongside Flask, Werkzeug and
+Terraform AWS IAM modules; see the batch manifest for exact imported revisions.
 
 | Source | Useful material | Main limitation / acquisition action |
 |---|---|---|
@@ -111,7 +117,8 @@ commit, path licenses, extraction tool version, acquisition time and family
 relationships in a companion provenance manifest. The minimal v0.1 source field
 holds the changed revision; the manifest carries both sides. Check rights before
 redistributing source snippets; a dataset's metadata license does not relicense
-the underlying projects. This prototype redistributes only authored examples.
+the underlying projects. The pilot retains original upstream notices alongside
+the imported source; authored smoke examples remain separate.
 
 Semgrep's [community rules](https://github.com/semgrep/semgrep-rules) can guide a
 deterministic comparison, but they have their own Rules License. Do not bundle

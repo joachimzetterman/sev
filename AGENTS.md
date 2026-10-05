@@ -49,6 +49,7 @@ runtimes optional. Run relevant checks for code or data changes:
 uv sync --locked
 uv run python -m unittest discover -s tests -v
 uv run sev validate data/smoke.jsonl
+uv run sev verify-intake data/pilot-001/manifest.json data/pilot-001
 uv run sev bench data/smoke.jsonl --split smoke --backend rules --out artifacts/RUN_ID
 ```
 
@@ -79,7 +80,8 @@ reports instead of repeating them in the description.
 - Taxonomy changes: [annotation guide](docs/taxonomy.md); definitions live in
   [sev/taxonomy.py](sev/taxonomy.py). Regenerate the guide with
   `uv run python scripts/render_taxonomy.py` when definitions change.
-- Data acquisition or labeling: [dataset protocol](docs/dataset.md).
+- Data acquisition or labeling: [dataset protocol](docs/dataset.md) and
+  [real-diff intake](docs/intake.md).
 - Backends, metrics or comparisons: [experiment protocol](docs/experiment.md).
 - Installation, CLI defaults or SDK: [developer preview](docs/preview.md).
 - Pointer architecture work: [Kev investigation](docs/kev.md).

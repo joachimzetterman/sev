@@ -24,9 +24,9 @@ recording confusing judgments, missing context and end-to-end latency. Model
 generated feedback remains provisional. Avoid expanding the product until this
 small workflow proves useful.
 
-The real-diff intake and 32-candidate batch are prepared in
-[PR #2](https://github.com/joachimzetterman/sev/pull/2), which is still separate
-from this preview. The research sequence below remains the longer-term plan.
+The real-diff intake and 32-candidate batch were merged in
+[PR #2](https://github.com/joachimzetterman/sev/pull/2) and are available alongside
+the preview. The research sequence below remains the longer-term plan.
 
 ## Current evidence
 
@@ -36,15 +36,19 @@ from this preview. The research sequence below remains the longer-term plan.
   examples. Those provisional examples are not an independent benchmark.
 - The tested small-model configuration needs improvement. It does not establish
   whether specialisation or Kev's architecture would help.
+- The real-diff importer and [first 32-candidate batch](../data/pilot-001/README.md)
+  are implemented. These are unlabelled development inputs from four projects,
+  with pinned provenance and licenses; they provide no model-quality evidence.
 - Independent annotation, real deterministic-tool comparisons, strong
   general-model measurements and Kev comparisons remain outstanding.
 
 See [the measured results](results.md) for exact evidence and limitations.
 
-## 1. Prepared in PR #2: real-diff intake and first annotation batch
+## 1. Implemented: real-diff intake and first annotation batch
 
-Build a reproducible importer and prepare 30–50 real changes as the first batch
-of the [100–200-change development pilot](dataset.md).
+The [intake protocol](intake.md) reproduces 32 selected-file diffs as the first
+batch of the [100–200-change development pilot](dataset.md). It records 320 pool
+decisions and preserves related families, original licenses and exact inputs.
 
 - Record upstream project, immutable parent/change commits, extraction settings,
   source licenses and family relationships. Check redistribution rights before
@@ -61,7 +65,11 @@ of the [100–200-change development pilot](dataset.md).
 are grouped, inclusion/exclusion decisions are recorded, and the same inputs
 are ready for independent annotation. This PR need not train or run a model.
 
-## 2. Validate the taxonomy through independent annotation
+These intake criteria are met for the first batch. Remaining coverage limits
+include Python-framework bias, ORM-only SQL examples and unknown pretraining
+exposure. Review label coverage before expanding the pilot.
+
+## 2. Next research milestone: validate the taxonomy through independent annotation
 
 Two reviewers independently label the same supplied inputs using the
 [annotation guide](taxonomy.md). Retain their original annotations, measure

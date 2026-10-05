@@ -1,0 +1,4980 @@
+{
+  "schema_version": "sev-intake-0.1",
+  "batch_id": "pilot-001",
+  "purpose": "development-pilot",
+  "acquired_at": "2026-09-28T21:11:33.387136+00:00",
+  "selection_notes": "Manual selection of eight commits per project from the newest 80 non-merge commits reachable from each pinned snapshot (git rev-list --date-order --no-merges --max-count=80). Every pool decision is recorded. Sampling tags are hypotheses, never gold labels. This framework/IAM-heavy, historical public sample is development-only and not representative; model pretraining exposure is unknown. Inputs contain selected first-party changed files, not whole commits, and no tests, advisories, release notes or commit messages. Omitted paths are audited. Family grouping is conservative within the included sample; reassess forks/backports before extending the corpus.",
+  "extraction": {
+    "diff_algorithm": "myers",
+    "context_lines": 3,
+    "renames": false,
+    "scope": "selected-files",
+    "max_input_bytes": 262144
+  },
+  "projects": {
+    "django": {
+      "repository": "https://github.com/django/django",
+      "snapshot": "3cff3209e35a560f94801d428cf7f2a3ecb2a051",
+      "snapshot_ref": "5.2.7",
+      "license_review": "First-party Python, CSS and workflow paths only; vendor directories omitted. Retain BSD and bundled Python notices.",
+      "licenses": [
+        {
+          "path": "LICENSE",
+          "spdx": "BSD-3-Clause",
+          "sha256": "b846415d1b514e9c1dff14a22deb906d794bc546ca6129f950a18cd091e2a669"
+        },
+        {
+          "path": "LICENSE.python",
+          "spdx": "Python-2.0",
+          "sha256": "765e2b1e339fef8d3e9f12892e7e072a8be309996a0be43ffc5796398ec4e7d4"
+        }
+      ]
+    },
+    "flask": {
+      "repository": "https://github.com/pallets/flask",
+      "snapshot": "2c1b30d0503cfb064f1cb252e6614a06915a362a",
+      "snapshot_ref": "3.1.2",
+      "license_review": "First-party Python and workflow paths; no example assets or third-party code selected.",
+      "licenses": [
+        {
+          "path": "LICENSE.txt",
+          "spdx": "BSD-3-Clause",
+          "sha256": "489a8e1108509ed98a37bb983e11e0f7e1d31f0bd8f99a79c8448e7ff37d07ea"
+        }
+      ]
+    },
+    "werkzeug": {
+      "repository": "https://github.com/pallets/werkzeug",
+      "snapshot": "6389612fd1ee1bd93579eed5026e8fd471d04abd",
+      "snapshot_ref": "3.1.3",
+      "license_review": "First-party Python and workflow paths; debug icons and other bundled assets omitted.",
+      "licenses": [
+        {
+          "path": "LICENSE.txt",
+          "spdx": "BSD-3-Clause",
+          "sha256": "3b49dcee4105eb37bac10faf1be260408fe85d252b8e9df2e0979fc1e094437b"
+        }
+      ]
+    },
+    "iam": {
+      "repository": "https://github.com/terraform-aws-modules/terraform-aws-iam",
+      "snapshot": "677a92189253042a93de2df2f5cf2d3bcab9ad37",
+      "snapshot_ref": "v6.2.0",
+      "license_review": "First-party Terraform module files; no vendored modules. No root NOTICE or additional path licenses found in the source snapshot.",
+      "licenses": [
+        {
+          "path": "LICENSE",
+          "spdx": "Apache-2.0",
+          "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
+        }
+      ]
+    }
+  },
+  "entries": [
+    {
+      "id": "C8594c923d715",
+      "project": "django",
+      "parent": "ed8fc39d77465eddbde1191a054ae965f6a8a584",
+      "revision": "3cff3209e35a560f94801d428cf7f2a3ecb2a051",
+      "group_id": "django-3cff3209e35a560f94801d428cf7f2a3ecb2a051",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C63776fd2c9d2",
+      "project": "django",
+      "parent": "52fbae0a4dbbe5faa59827f8f05694a0065cc135",
+      "revision": "ed8fc39d77465eddbde1191a054ae965f6a8a584",
+      "group_id": "django-ed8fc39d77465eddbde1191a054ae965f6a8a584",
+      "paths": [
+        "django/utils/archive.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Archive path containment fix, selected using the upstream 2025-10-01 security release; no advisory or regression tests in input.",
+      "selection_tags": [
+        "application",
+        "security-fix"
+      ],
+      "expected_input_hash": "4062a0df7f8d10db1515b624ab22be3be005c49bf9c3c09b123cd79b1f67984c"
+    },
+    {
+      "id": "Cbd6b1d7dafaa",
+      "project": "django",
+      "parent": "1794cbf961f9ea54715fb094fe8adc80a5054947",
+      "revision": "52fbae0a4dbbe5faa59827f8f05694a0065cc135",
+      "group_id": "django-sql-alias-validation",
+      "paths": [
+        "django/db/models/sql/query.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "SQL alias handling fix from the upstream 2025-10-01 security release; grouped with the related alias-validation change.",
+      "selection_tags": [
+        "sql",
+        "security-fix"
+      ],
+      "expected_input_hash": "8d4088bb482666a56bc24b76e327266662328fb461133cd5f34cfb5724e3f2a1"
+    },
+    {
+      "id": "Cce45e942c4bb",
+      "project": "django",
+      "parent": "81625a141e1feaaea877fc18876fdd7b6394442c",
+      "revision": "1794cbf961f9ea54715fb094fe8adc80a5054947",
+      "group_id": "django-1794cbf961f9ea54715fb094fe8adc80a5054947",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd889a02a22ab",
+      "project": "django",
+      "parent": "6f3813e4b6e3db7fa3cc612c78f898142468bca9",
+      "revision": "81625a141e1feaaea877fc18876fdd7b6394442c",
+      "group_id": "django-81625a141e1feaaea877fc18876fdd7b6394442c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2554b3e6e9d2",
+      "project": "django",
+      "parent": "10a2d3b837c5d8c1ac0cabd399ad7edcc66bfa8e",
+      "revision": "6f3813e4b6e3db7fa3cc612c78f898142468bca9",
+      "group_id": "django-6f3813e4b6e3db7fa3cc612c78f898142468bca9",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C288e1c04517c",
+      "project": "django",
+      "parent": "b2773a39a34f0f0ca768fa1daaf8bf72fca56e06",
+      "revision": "10a2d3b837c5d8c1ac0cabd399ad7edcc66bfa8e",
+      "group_id": "django-10a2d3b837c5d8c1ac0cabd399ad7edcc66bfa8e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf3aa6963d919",
+      "project": "django",
+      "parent": "7554c54e5f02566520dee81c8b95f47429f1b553",
+      "revision": "b2773a39a34f0f0ca768fa1daaf8bf72fca56e06",
+      "group_id": "django-b2773a39a34f0f0ca768fa1daaf8bf72fca56e06",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C22c40e23c512",
+      "project": "django",
+      "parent": "2a2936c3e6444a0f37156773ca405cedaf28dea7",
+      "revision": "7554c54e5f02566520dee81c8b95f47429f1b553",
+      "group_id": "django-7554c54e5f02566520dee81c8b95f47429f1b553",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2737bb1ab2a8",
+      "project": "django",
+      "parent": "5484d1f2b0af95cf7d8e4765c52c4599a700e756",
+      "revision": "2a2936c3e6444a0f37156773ca405cedaf28dea7",
+      "group_id": "django-2a2936c3e6444a0f37156773ca405cedaf28dea7",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce91a2bcc0d74",
+      "project": "django",
+      "parent": "d8e9dec1ada659755595e2d90a3492f8f805f394",
+      "revision": "5484d1f2b0af95cf7d8e4765c52c4599a700e756",
+      "group_id": "django-5484d1f2b0af95cf7d8e4765c52c4599a700e756",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cddace1a81bc3",
+      "project": "django",
+      "parent": "1dbf415a1829a0bacd8cb31a8da5f2a99c5ea465",
+      "revision": "d8e9dec1ada659755595e2d90a3492f8f805f394",
+      "group_id": "django-d8e9dec1ada659755595e2d90a3492f8f805f394",
+      "paths": [
+        "django/contrib/admin/static/admin/css/widgets.css"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Ordinary admin widget color change; a contrast to security-focused application changes.",
+      "selection_tags": [
+        "application",
+        "ordinary"
+      ],
+      "expected_input_hash": "eb3b3d0f66dcdd595c34c93bcda4f0f50fe82edac5532432fd174d695446257a"
+    },
+    {
+      "id": "C80f3bfc73710",
+      "project": "django",
+      "parent": "b8df1eb7c2f3e6db8866d9209330b237cdd83eeb",
+      "revision": "1dbf415a1829a0bacd8cb31a8da5f2a99c5ea465",
+      "group_id": "django-1dbf415a1829a0bacd8cb31a8da5f2a99c5ea465",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C6e390a7b9634",
+      "project": "django",
+      "parent": "adc80dd81eb70d8e11230b9603b025f0d98e1373",
+      "revision": "b8df1eb7c2f3e6db8866d9209330b237cdd83eeb",
+      "group_id": "django-b8df1eb7c2f3e6db8866d9209330b237cdd83eeb",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1de369cddefa",
+      "project": "django",
+      "parent": "fbced43cf84445e3770ce0a3744daca383813ad2",
+      "revision": "adc80dd81eb70d8e11230b9603b025f0d98e1373",
+      "group_id": "django-adc80dd81eb70d8e11230b9603b025f0d98e1373",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd60005579f16",
+      "project": "django",
+      "parent": "e2d83a2076ca3c7db31ddf8f56fef5af9208cdac",
+      "revision": "fbced43cf84445e3770ce0a3744daca383813ad2",
+      "group_id": "django-fbced43cf84445e3770ce0a3744daca383813ad2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce583841872ea",
+      "project": "django",
+      "parent": "18c6bc5db244f8fdc9fbbaa73f1e9a1f4b444513",
+      "revision": "e2d83a2076ca3c7db31ddf8f56fef5af9208cdac",
+      "group_id": "django-e2d83a2076ca3c7db31ddf8f56fef5af9208cdac",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C17cb00df7129",
+      "project": "django",
+      "parent": "db13f7fbcb412ef1333f2c8bbb1d3d02344e3dd1",
+      "revision": "18c6bc5db244f8fdc9fbbaa73f1e9a1f4b444513",
+      "group_id": "django-18c6bc5db244f8fdc9fbbaa73f1e9a1f4b444513",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C72c2d2c6bfef",
+      "project": "django",
+      "parent": "90a9ba1aec109e77b8a663633cca154bd3b7b5d8",
+      "revision": "db13f7fbcb412ef1333f2c8bbb1d3d02344e3dd1",
+      "group_id": "django-db13f7fbcb412ef1333f2c8bbb1d3d02344e3dd1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C4529ec71e6f7",
+      "project": "django",
+      "parent": "75c4403f07b8ad25893f7832dbe8fc6814b53b2d",
+      "revision": "90a9ba1aec109e77b8a663633cca154bd3b7b5d8",
+      "group_id": "django-90a9ba1aec109e77b8a663633cca154bd3b7b5d8",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C6a2bd2e20f79",
+      "project": "django",
+      "parent": "4c044fcc866ec226f612c475950b690b0139d243",
+      "revision": "75c4403f07b8ad25893f7832dbe8fc6814b53b2d",
+      "group_id": "django-75c4403f07b8ad25893f7832dbe8fc6814b53b2d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C19acb8fcb8a2",
+      "project": "django",
+      "parent": "e87ca3d6fa6fb12e06f9c755ecd3ebc3a528e02b",
+      "revision": "4c044fcc866ec226f612c475950b690b0139d243",
+      "group_id": "django-sql-alias-validation",
+      "paths": [
+        "django/db/models/sql/query.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Related SQL alias validation fix; same family as the later alias fix, not an independent vulnerability example.",
+      "selection_tags": [
+        "sql",
+        "security-fix"
+      ],
+      "expected_input_hash": "14a9dbdb93db99d3a613a4b0eca786bdfd51c29d22aed8bbf5d5937903f930da"
+    },
+    {
+      "id": "Cf414129e53f1",
+      "project": "django",
+      "parent": "ebec2c93230216f128184f5563215ad7760a7fc5",
+      "revision": "e87ca3d6fa6fb12e06f9c755ecd3ebc3a528e02b",
+      "group_id": "django-e87ca3d6fa6fb12e06f9c755ecd3ebc3a528e02b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce818637fcea0",
+      "project": "django",
+      "parent": "ace59cb83b87a4fdeab29424ea134e78de24fb27",
+      "revision": "ebec2c93230216f128184f5563215ad7760a7fc5",
+      "group_id": "django-ebec2c93230216f128184f5563215ad7760a7fc5",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C6700e10b0b1d",
+      "project": "django",
+      "parent": "16a12a979989565f471ef1a2011bab59f8226f05",
+      "revision": "ace59cb83b87a4fdeab29424ea134e78de24fb27",
+      "group_id": "django-ace59cb83b87a4fdeab29424ea134e78de24fb27",
+      "paths": [
+        "django/db/models/sql/query.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Ordinary multi-column query behavior change; only the supplied implementation diff is available.",
+      "selection_tags": [
+        "sql",
+        "ordinary",
+        "missing-context-candidate"
+      ],
+      "expected_input_hash": "dd85e9ff482da900e68d9db8e3a43538822545d285dcda5508dcab6f5adf5d9f"
+    },
+    {
+      "id": "C1736b75fd248",
+      "project": "django",
+      "parent": "51753bc80925ecbe07d944dd22449d5ca867b9d4",
+      "revision": "16a12a979989565f471ef1a2011bab59f8226f05",
+      "group_id": "django-16a12a979989565f471ef1a2011bab59f8226f05",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ccc9a52e913f6",
+      "project": "django",
+      "parent": "a4864551259f70e044043cf64b6925b816352156",
+      "revision": "51753bc80925ecbe07d944dd22449d5ca867b9d4",
+      "group_id": "django-51753bc80925ecbe07d944dd22449d5ca867b9d4",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C46368ee3e3ee",
+      "project": "django",
+      "parent": "f8e572e843b037dea9c79bcecd7b9626b2b4ceba",
+      "revision": "a4864551259f70e044043cf64b6925b816352156",
+      "group_id": "django-a4864551259f70e044043cf64b6925b816352156",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C989d532d2022",
+      "project": "django",
+      "parent": "9c9ed6fd7a8399113a18b979c8cd6f04cfbfa30b",
+      "revision": "f8e572e843b037dea9c79bcecd7b9626b2b4ceba",
+      "group_id": "django-f8e572e843b037dea9c79bcecd7b9626b2b4ceba",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf8df3be4d058",
+      "project": "django",
+      "parent": "98972b53aabbca8b7ce74b462d00a6a2c2d26287",
+      "revision": "9c9ed6fd7a8399113a18b979c8cd6f04cfbfa30b",
+      "group_id": "django-9c9ed6fd7a8399113a18b979c8cd6f04cfbfa30b",
+      "paths": [
+        "django/contrib/auth/__init__.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Deprecation-message edit in authentication code; tests whether security terminology alone influences judgments.",
+      "selection_tags": [
+        "application",
+        "hard-negative-candidate"
+      ],
+      "expected_input_hash": "f6ba6d98a10598fba5e754885879d9c9b42420826c06c7475901dee682830dc1"
+    },
+    {
+      "id": "Cebb2599b76df",
+      "project": "django",
+      "parent": "38844c348ba1f163460746e0e1a486deb0f7e55e",
+      "revision": "98972b53aabbca8b7ce74b462d00a6a2c2d26287",
+      "group_id": "django-98972b53aabbca8b7ce74b462d00a6a2c2d26287",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb25515b1bb8d",
+      "project": "django",
+      "parent": "9a720d5c5000b4fe0e75cdb87271065b5e80dedc",
+      "revision": "38844c348ba1f163460746e0e1a486deb0f7e55e",
+      "group_id": "django-38844c348ba1f163460746e0e1a486deb0f7e55e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C653c0c33ae74",
+      "project": "django",
+      "parent": "74fafe2715fa2569a1682defcedc12a2e03b13d1",
+      "revision": "9a720d5c5000b4fe0e75cdb87271065b5e80dedc",
+      "group_id": "django-9a720d5c5000b4fe0e75cdb87271065b5e80dedc",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C77db6a0538d1",
+      "project": "django",
+      "parent": "a4e27c0c6bcc37ad7d7f6098e5d44edbbcca2c42",
+      "revision": "74fafe2715fa2569a1682defcedc12a2e03b13d1",
+      "group_id": "django-74fafe2715fa2569a1682defcedc12a2e03b13d1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce4cc363a8874",
+      "project": "django",
+      "parent": "4926591343756d9fdd5d57680e021364ff71288f",
+      "revision": "a4e27c0c6bcc37ad7d7f6098e5d44edbbcca2c42",
+      "group_id": "django-a4e27c0c6bcc37ad7d7f6098e5d44edbbcca2c42",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C47b3fd3b5155",
+      "project": "django",
+      "parent": "1d9f6c3270649a4b103df9bfd18733a750341a4e",
+      "revision": "4926591343756d9fdd5d57680e021364ff71288f",
+      "group_id": "django-4926591343756d9fdd5d57680e021364ff71288f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8bb06b74b713",
+      "project": "django",
+      "parent": "ad836aa0c5a2a9f216a7cc422560f0852d482dde",
+      "revision": "1d9f6c3270649a4b103df9bfd18733a750341a4e",
+      "group_id": "django-1d9f6c3270649a4b103df9bfd18733a750341a4e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C88a850fc9c5a",
+      "project": "django",
+      "parent": "a7546c477384e3f0a60bd917895bb734fd5f8efd",
+      "revision": "ad836aa0c5a2a9f216a7cc422560f0852d482dde",
+      "group_id": "django-ad836aa0c5a2a9f216a7cc422560f0852d482dde",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C9da3da2b04ba",
+      "project": "django",
+      "parent": "a3b1107a4955bdd994908efb4c6e1d03c281e69f",
+      "revision": "a7546c477384e3f0a60bd917895bb734fd5f8efd",
+      "group_id": "django-a7546c477384e3f0a60bd917895bb734fd5f8efd",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C6e5d94bec62c",
+      "project": "django",
+      "parent": "0489f54e8b047374f0b83fe77695976edcf8c118",
+      "revision": "a3b1107a4955bdd994908efb4c6e1d03c281e69f",
+      "group_id": "django-a3b1107a4955bdd994908efb4c6e1d03c281e69f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0a9ff1eb08e8",
+      "project": "django",
+      "parent": "a9c7d4b703759e9903dd92899dd8ac662007baf3",
+      "revision": "0489f54e8b047374f0b83fe77695976edcf8c118",
+      "group_id": "django-0489f54e8b047374f0b83fe77695976edcf8c118",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2a842fef66aa",
+      "project": "django",
+      "parent": "5ad6d43cd9ae05d3575f9e7bb1cb488bce5d905d",
+      "revision": "a9c7d4b703759e9903dd92899dd8ac662007baf3",
+      "group_id": "django-a9c7d4b703759e9903dd92899dd8ac662007baf3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cc0116da2aa59",
+      "project": "django",
+      "parent": "bdc3f9e3508fc144c5e9710f5b672cc41f6e742d",
+      "revision": "5ad6d43cd9ae05d3575f9e7bb1cb488bce5d905d",
+      "group_id": "django-5ad6d43cd9ae05d3575f9e7bb1cb488bce5d905d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7fac609911bf",
+      "project": "django",
+      "parent": "f01ceae477a71a1c244c332e1b53a9499e484874",
+      "revision": "bdc3f9e3508fc144c5e9710f5b672cc41f6e742d",
+      "group_id": "django-bdc3f9e3508fc144c5e9710f5b672cc41f6e742d",
+      "paths": [
+        "django/db/models/fields/related.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Ordinary model-field validation change with nontrivial framework semantics.",
+      "selection_tags": [
+        "application",
+        "ordinary"
+      ],
+      "expected_input_hash": "8bb5159a3e6b5292a1186b16e2afae5b1d50cb086afa9b41dc0da3f67f595af1"
+    },
+    {
+      "id": "Cabcd7c7d2e0c",
+      "project": "django",
+      "parent": "5ca58ce3d0d254752caa19e96055f54feadd5582",
+      "revision": "f01ceae477a71a1c244c332e1b53a9499e484874",
+      "group_id": "django-f01ceae477a71a1c244c332e1b53a9499e484874",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd5f3e95dac75",
+      "project": "django",
+      "parent": "b3bb7230e1225861b5c1f08931f2d82c2b04133a",
+      "revision": "5ca58ce3d0d254752caa19e96055f54feadd5582",
+      "group_id": "django-5ca58ce3d0d254752caa19e96055f54feadd5582",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1086407021b6",
+      "project": "django",
+      "parent": "e5ccb69bc3da407ab2b0477c0cc5db27c7207225",
+      "revision": "b3bb7230e1225861b5c1f08931f2d82c2b04133a",
+      "group_id": "django-b3bb7230e1225861b5c1f08931f2d82c2b04133a",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7bb9961573c6",
+      "project": "django",
+      "parent": "5aefd005fc3dd35be6e9e4a24f9c2bc92b69df3b",
+      "revision": "e5ccb69bc3da407ab2b0477c0cc5db27c7207225",
+      "group_id": "django-e5ccb69bc3da407ab2b0477c0cc5db27c7207225",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C078ee3f315fd",
+      "project": "django",
+      "parent": "3031c512f0cf030dc8f99128bcb4fb9d4d6e285a",
+      "revision": "5aefd005fc3dd35be6e9e4a24f9c2bc92b69df3b",
+      "group_id": "django-5aefd005fc3dd35be6e9e4a24f9c2bc92b69df3b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C33720a848dcd",
+      "project": "django",
+      "parent": "28f33f50b2edb6a40bb2696af0eed2b9d76494cd",
+      "revision": "3031c512f0cf030dc8f99128bcb4fb9d4d6e285a",
+      "group_id": "django-3031c512f0cf030dc8f99128bcb4fb9d4d6e285a",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C82735731e359",
+      "project": "django",
+      "parent": "c1356333b6929473a5ce8e539a8cbe8beb2cb485",
+      "revision": "28f33f50b2edb6a40bb2696af0eed2b9d76494cd",
+      "group_id": "django-28f33f50b2edb6a40bb2696af0eed2b9d76494cd",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C84ac527fd3f6",
+      "project": "django",
+      "parent": "6e71386118b1e9af0bf60b75ad9549aa5df2192d",
+      "revision": "c1356333b6929473a5ce8e539a8cbe8beb2cb485",
+      "group_id": "django-c1356333b6929473a5ce8e539a8cbe8beb2cb485",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C87d686669c14",
+      "project": "django",
+      "parent": "6966adc519ccb09a1e72ffd1c37489e85d675556",
+      "revision": "6e71386118b1e9af0bf60b75ad9549aa5df2192d",
+      "group_id": "django-6e71386118b1e9af0bf60b75ad9549aa5df2192d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cbb76ab54fcc7",
+      "project": "django",
+      "parent": "a76587531b1f41343ed1f6977a999e4e3a9f6b44",
+      "revision": "6966adc519ccb09a1e72ffd1c37489e85d675556",
+      "group_id": "django-6966adc519ccb09a1e72ffd1c37489e85d675556",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca88c9aa97750",
+      "project": "django",
+      "parent": "fcc7c12f8013e389276ec33fab7a11935b0af37e",
+      "revision": "a76587531b1f41343ed1f6977a999e4e3a9f6b44",
+      "group_id": "django-a76587531b1f41343ed1f6977a999e4e3a9f6b44",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cc8f88081f5d7",
+      "project": "django",
+      "parent": "c1883c3b20cf4d9d086f37adff9670f2f5424629",
+      "revision": "fcc7c12f8013e389276ec33fab7a11935b0af37e",
+      "group_id": "django-fcc7c12f8013e389276ec33fab7a11935b0af37e",
+      "paths": [
+        ".github/workflows/check-commit-messages.yml",
+        ".github/workflows/check_commit_messages.yml"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Workflow revision-selection fix; first-party CI input alongside application code.",
+      "selection_tags": [
+        "ci",
+        "ordinary"
+      ],
+      "expected_input_hash": "3581f8e295c4aa406f3f9694996d781f1acdce5680ad63cb6b598c352b8fcf21"
+    },
+    {
+      "id": "Caea3102d6b27",
+      "project": "django",
+      "parent": "1c2e11c7f4b07fb854a58645ba25633c8fe56310",
+      "revision": "c1883c3b20cf4d9d086f37adff9670f2f5424629",
+      "group_id": "django-c1883c3b20cf4d9d086f37adff9670f2f5424629",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd5869d1f2201",
+      "project": "django",
+      "parent": "e5080fc5e94eb9b32bf8abc031602c40d9ff36c1",
+      "revision": "1c2e11c7f4b07fb854a58645ba25633c8fe56310",
+      "group_id": "django-1c2e11c7f4b07fb854a58645ba25633c8fe56310",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C4ec278afa9d2",
+      "project": "django",
+      "parent": "3df1ad57bfcabaf75e4617064d79610f185f3f9f",
+      "revision": "e5080fc5e94eb9b32bf8abc031602c40d9ff36c1",
+      "group_id": "django-e5080fc5e94eb9b32bf8abc031602c40d9ff36c1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1cc532cb36f7",
+      "project": "django",
+      "parent": "abc10ab7f9ddc01807dd4afc33be21d3c302435d",
+      "revision": "3df1ad57bfcabaf75e4617064d79610f185f3f9f",
+      "group_id": "django-3df1ad57bfcabaf75e4617064d79610f185f3f9f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C5960c252e8cd",
+      "project": "django",
+      "parent": "4da3446c924bd2db132de46686244ec4bcda9dd3",
+      "revision": "abc10ab7f9ddc01807dd4afc33be21d3c302435d",
+      "group_id": "django-abc10ab7f9ddc01807dd4afc33be21d3c302435d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C55915227ca30",
+      "project": "django",
+      "parent": "1a5c75d8cdd6ae04c279f19199277f3667425667",
+      "revision": "4da3446c924bd2db132de46686244ec4bcda9dd3",
+      "group_id": "django-4da3446c924bd2db132de46686244ec4bcda9dd3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C13ab420eb093",
+      "project": "django",
+      "parent": "c941d0deec0ea08a30670be0fac879f2372f071b",
+      "revision": "1a5c75d8cdd6ae04c279f19199277f3667425667",
+      "group_id": "django-1a5c75d8cdd6ae04c279f19199277f3667425667",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C91b9b844f454",
+      "project": "django",
+      "parent": "47a618d45c6e40dd59f4cdd46fd5fc7d11626f6d",
+      "revision": "c941d0deec0ea08a30670be0fac879f2372f071b",
+      "group_id": "django-c941d0deec0ea08a30670be0fac879f2372f071b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7d901430bd47",
+      "project": "django",
+      "parent": "a150160c9fc6ba6220f1e63863b03e7f7978b747",
+      "revision": "47a618d45c6e40dd59f4cdd46fd5fc7d11626f6d",
+      "group_id": "django-47a618d45c6e40dd59f4cdd46fd5fc7d11626f6d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C31d9771ccd97",
+      "project": "django",
+      "parent": "db5da3c91c3122300680c4e7200a463273a5351e",
+      "revision": "a150160c9fc6ba6220f1e63863b03e7f7978b747",
+      "group_id": "django-a150160c9fc6ba6220f1e63863b03e7f7978b747",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3663856eb434",
+      "project": "django",
+      "parent": "359af3779a66281361aff50629c25e81fcfec048",
+      "revision": "db5da3c91c3122300680c4e7200a463273a5351e",
+      "group_id": "django-db5da3c91c3122300680c4e7200a463273a5351e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce895d9eff7d5",
+      "project": "django",
+      "parent": "1d89691c7481fbcef6a7bc396e41a651372c1cf3",
+      "revision": "359af3779a66281361aff50629c25e81fcfec048",
+      "group_id": "django-359af3779a66281361aff50629c25e81fcfec048",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C832badaf696b",
+      "project": "django",
+      "parent": "4de4edf2c05cc80c514c989db480f2fe23ad5ee2",
+      "revision": "1d89691c7481fbcef6a7bc396e41a651372c1cf3",
+      "group_id": "django-1d89691c7481fbcef6a7bc396e41a651372c1cf3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7cec1b1a1f26",
+      "project": "django",
+      "parent": "f5cc6a888b60e0f79415cdd206cedbcc441eed82",
+      "revision": "4de4edf2c05cc80c514c989db480f2fe23ad5ee2",
+      "group_id": "django-4de4edf2c05cc80c514c989db480f2fe23ad5ee2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8decc06710b1",
+      "project": "django",
+      "parent": "538616136be0f9c29f9122984a29e2c0a316958d",
+      "revision": "f5cc6a888b60e0f79415cdd206cedbcc441eed82",
+      "group_id": "django-f5cc6a888b60e0f79415cdd206cedbcc441eed82",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca65b6e9ea044",
+      "project": "django",
+      "parent": "e3b2370795d8373c62b799b7c9fa3fef1c0a2bb1",
+      "revision": "538616136be0f9c29f9122984a29e2c0a316958d",
+      "group_id": "django-538616136be0f9c29f9122984a29e2c0a316958d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cadde6b3d9010",
+      "project": "django",
+      "parent": "91569cffeccf03756bb9217c46e1b18591213d6a",
+      "revision": "e3b2370795d8373c62b799b7c9fa3fef1c0a2bb1",
+      "group_id": "django-e3b2370795d8373c62b799b7c9fa3fef1c0a2bb1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C12f94c79e122",
+      "project": "django",
+      "parent": "329a5c9228b7d1752830d3af1a7c602056b82156",
+      "revision": "91569cffeccf03756bb9217c46e1b18591213d6a",
+      "group_id": "django-91569cffeccf03756bb9217c46e1b18591213d6a",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cc8bbb88cd2f0",
+      "project": "django",
+      "parent": "69fe089f008549fec53553253b283ac294450127",
+      "revision": "329a5c9228b7d1752830d3af1a7c602056b82156",
+      "group_id": "django-329a5c9228b7d1752830d3af1a7c602056b82156",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce03d9bde3316",
+      "project": "django",
+      "parent": "6979ee39ae56759b75a857cf6241594841e73113",
+      "revision": "69fe089f008549fec53553253b283ac294450127",
+      "group_id": "django-69fe089f008549fec53553253b283ac294450127",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C9ee8e0f2caf9",
+      "project": "django",
+      "parent": "15883bc669303242742a81f06958175dddbb66de",
+      "revision": "6979ee39ae56759b75a857cf6241594841e73113",
+      "group_id": "django-6979ee39ae56759b75a857cf6241594841e73113",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb91d87eed70a",
+      "project": "django",
+      "parent": "264003146f951a798e573ca563d0bf817fb91ad3",
+      "revision": "15883bc669303242742a81f06958175dddbb66de",
+      "group_id": "django-15883bc669303242742a81f06958175dddbb66de",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf74dac2501b8",
+      "project": "django",
+      "parent": "6f99c8856d17e29564bc5d432bb7d7b8f73bc73c",
+      "revision": "264003146f951a798e573ca563d0bf817fb91ad3",
+      "group_id": "django-264003146f951a798e573ca563d0bf817fb91ad3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C726939a8a11e",
+      "project": "django",
+      "parent": "aec11dbb4c2c66af8d09dc194a46950751b0ea34",
+      "revision": "6f99c8856d17e29564bc5d432bb7d7b8f73bc73c",
+      "group_id": "django-6f99c8856d17e29564bc5d432bb7d7b8f73bc73c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8d07ce9f9ddc",
+      "project": "flask",
+      "parent": "1292419ddfc6a14fc7f85b5ed7efcc2d215f1ad3",
+      "revision": "2c1b30d0503cfb064f1cb252e6614a06915a362a",
+      "group_id": "flask-2c1b30d0503cfb064f1cb252e6614a06915a362a",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C33e74ead74f0",
+      "project": "flask",
+      "parent": "55c62556571ee46a94da174643b50ece06edead4",
+      "revision": "4dd52ca9c768c9b6d04180f0547d6f4b6e34f211",
+      "group_id": "flask-4dd52ca9c768c9b6d04180f0547d6f4b6e34f211",
+      "paths": [
+        ".github/workflows/publish.yaml"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Artifact-handling workflow change, sampled as ordinary CI maintenance.",
+      "selection_tags": [
+        "ci",
+        "ordinary"
+      ],
+      "expected_input_hash": "1ccef4c91e7106f2d2bac5322f1ed044cd3318b96c720e743a08d917f00eac47"
+    },
+    {
+      "id": "C4445197c2870",
+      "project": "flask",
+      "parent": "d8259eb11900285af9b80b0fa47f841174c054e3",
+      "revision": "55c62556571ee46a94da174643b50ece06edead4",
+      "group_id": "flask-55c62556571ee46a94da174643b50ece06edead4",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0a50a62af81e",
+      "project": "flask",
+      "parent": "38b4c1e19b50494cfcdc9332899e09b7fed34979",
+      "revision": "d8259eb11900285af9b80b0fa47f841174c054e3",
+      "group_id": "flask-d8259eb11900285af9b80b0fa47f841174c054e3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C71c6a9565fd7",
+      "project": "flask",
+      "parent": "49b7e7bc8fb69d605719991d1c0a99fcee689053",
+      "revision": "9822a0351574790cb66c652fcc396ad7aa2b09d8",
+      "group_id": "flask-9822a0351574790cb66c652fcc396ad7aa2b09d8",
+      "paths": [
+        "src/flask/helpers.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Streaming context behavior change; caller behavior is not supplied.",
+      "selection_tags": [
+        "application",
+        "ordinary",
+        "missing-context-candidate"
+      ],
+      "expected_input_hash": "d32fb35155f2cec33f83996612552bf207a3c03b3fb6374c617a3a39f6d30d5a"
+    },
+    {
+      "id": "C9296f61671e3",
+      "project": "flask",
+      "parent": "ff64079a516c269f171ababf3d92b86886a62ffd",
+      "revision": "b228ca3d87745b746d904a2108429617a814ffda",
+      "group_id": "flask-b228ca3d87745b746d904a2108429617a814ffda",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C633a4125a05d",
+      "project": "flask",
+      "parent": "1dfd7cd5555d9e62a2e198a131c366242e724b35",
+      "revision": "ff64079a516c269f171ababf3d92b86886a62ffd",
+      "group_id": "flask-ff64079a516c269f171ababf3d92b86886a62ffd",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C91cda10b2059",
+      "project": "flask",
+      "parent": "c56c5ec7c41e6ffd02516bf7cb80dd2ba9ba7aa3",
+      "revision": "d44f1c65239c3e33509224aa1931631243dbfa7f",
+      "group_id": "flask-d44f1c65239c3e33509224aa1931631243dbfa7f",
+      "paths": [
+        "src/flask/helpers.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Type-hint edit in file handling code; runtime impact must be judged from the diff.",
+      "selection_tags": [
+        "application",
+        "hard-negative-candidate"
+      ],
+      "expected_input_hash": "7fb39453482aec7d07410fae466781c26eb41d4971558d1ad3ae50f3c7592d7f"
+    },
+    {
+      "id": "Cb51642a93446",
+      "project": "flask",
+      "parent": "7fea7cf15688b2a2712b01c45c9e3385ea382e67",
+      "revision": "0f83958247e9eab1c7f62903601dfd5fe10c640f",
+      "group_id": "flask-0f83958247e9eab1c7f62903601dfd5fe10c640f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C4b0aabd6b2b2",
+      "project": "flask",
+      "parent": "5addaf833b2e8c7a616f89dd8ad5a44b07d7c000",
+      "revision": "53b8f08218796d95764c5252bccd8a50a173a6fb",
+      "group_id": "flask-53b8f08218796d95764c5252bccd8a50a173a6fb",
+      "paths": [
+        "src/flask/testing.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Test-client context preservation change, without release-note or test labels.",
+      "selection_tags": [
+        "application",
+        "ordinary"
+      ],
+      "expected_input_hash": "74e863539fb41710f71ead89131d85de607479c250392ca7f536f08643a8673b"
+    },
+    {
+      "id": "C94e9bb34da99",
+      "project": "flask",
+      "parent": "85cc71046475f9cb3efd17d496356795961249f9",
+      "revision": "5addaf833b2e8c7a616f89dd8ad5a44b07d7c000",
+      "group_id": "flask-5addaf833b2e8c7a616f89dd8ad5a44b07d7c000",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3ab40667889e",
+      "project": "flask",
+      "parent": "f17d9869489aea57d3fa05d5a3f1504fcf8e588c",
+      "revision": "85cc71046475f9cb3efd17d496356795961249f9",
+      "group_id": "flask-85cc71046475f9cb3efd17d496356795961249f9",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3b2e2a0cb028",
+      "project": "flask",
+      "parent": "2b42a803a25e56a3a0e2af939ee5be4dcc3f29c8",
+      "revision": "f17d9869489aea57d3fa05d5a3f1504fcf8e588c",
+      "group_id": "flask-f17d9869489aea57d3fa05d5a3f1504fcf8e588c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C204177f251af",
+      "project": "flask",
+      "parent": "a7b67c99f922f26b1071a90994e14261dc0a6df2",
+      "revision": "2b42a803a25e56a3a0e2af939ee5be4dcc3f29c8",
+      "group_id": "flask-2b42a803a25e56a3a0e2af939ee5be4dcc3f29c8",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb605c1141a37",
+      "project": "flask",
+      "parent": "f04c5e696400badaa52b3450ded53e9091c2078a",
+      "revision": "a758915893352f5986c6ee101cdf7e3b7a64fa28",
+      "group_id": "flask-a758915893352f5986c6ee101cdf7e3b7a64fa28",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C991d6080e83c",
+      "project": "flask",
+      "parent": "c07b201ce336c3e49ae3b6fa81aaf4fb871d90ba",
+      "revision": "f04c5e696400badaa52b3450ded53e9091c2078a",
+      "group_id": "flask-f04c5e696400badaa52b3450ded53e9091c2078a",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C5a96c3023433",
+      "project": "flask",
+      "parent": "a42c4d54a3e5cd56c0700479ede75157a748acd6",
+      "revision": "adeea0070700671230733879846417c80f4e62b1",
+      "group_id": "flask-adeea0070700671230733879846417c80f4e62b1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cdc53555f64fd",
+      "project": "flask",
+      "parent": "a42c4d54a3e5cd56c0700479ede75157a748acd6",
+      "revision": "7bf3be8dfa5832ef03a3fd8f07f6736e770440e4",
+      "group_id": "flask-7bf3be8dfa5832ef03a3fd8f07f6736e770440e4",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C5b3fd0a57e65",
+      "project": "flask",
+      "parent": "bbaf13333fd00644313488243cfe547b13dcae78",
+      "revision": "184ec3c5453e1156372085df35e8d922ce7e3559",
+      "group_id": "flask-184ec3c5453e1156372085df35e8d922ce7e3559",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1976a2fbfe11",
+      "project": "flask",
+      "parent": "57e72869486e89b45f6fd0a07cdd0adf80f5db1b",
+      "revision": "bbaf13333fd00644313488243cfe547b13dcae78",
+      "group_id": "flask-bbaf13333fd00644313488243cfe547b13dcae78",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce7dfe2149716",
+      "project": "flask",
+      "parent": "73d6504063bfa00666a92b07a28aaf906c532f09",
+      "revision": "7fff56f5172c48b6f3aedf17ee14ef5c2533dfd1",
+      "group_id": "flask-7fff56f5172c48b6f3aedf17ee14ef5c2533dfd1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C19f33d9b3853",
+      "project": "flask",
+      "parent": "fb54159861708558b5f5658ebdc14709d984361c",
+      "revision": "cbb6c36692f7d882e9026597624c0eb38e01f9cb",
+      "group_id": "flask-cbb6c36692f7d882e9026597624c0eb38e01f9cb",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C6de1cba8e0f5",
+      "project": "flask",
+      "parent": "941efd4a36ed0f27e13758874f95e3aa1d3ee163",
+      "revision": "fb54159861708558b5f5658ebdc14709d984361c",
+      "group_id": "flask-fb54159861708558b5f5658ebdc14709d984361c",
+      "paths": [
+        "src/flask/sessions.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Signing-key fallback ordering change; curation intent is not a gold security label.",
+      "selection_tags": [
+        "application",
+        "security-sensitive-change"
+      ],
+      "expected_input_hash": "999a4811dcf95d7e27188e3ad61d426ed73590fc3af814fee58ff741b2aea095"
+    },
+    {
+      "id": "C3635b768d267",
+      "project": "flask",
+      "parent": "e7851665071cb93b3c70b1e7103f82d1e6d01f5d",
+      "revision": "0109e496f6ca68de29480fe6413e81b1d3f86aa9",
+      "group_id": "flask-0109e496f6ca68de29480fe6413e81b1d3f86aa9",
+      "paths": [
+        ".github/workflows/publish.yaml",
+        ".github/workflows/tests.yaml"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Selected CI portion of a package-tool migration; omitted files are disclosed in the audit.",
+      "selection_tags": [
+        "ci",
+        "ordinary"
+      ],
+      "expected_input_hash": "8a1f368cd6c7ca5ac128b87a48898af389bf6e9adc3f03abaf7e7a4dd95c910b"
+    },
+    {
+      "id": "Cc1a640f4e144",
+      "project": "flask",
+      "parent": "bfffe87d4c2ea255b9a51432bebb3d28741245c4",
+      "revision": "410e5ab7ed0ef326fa8b5164a633863f137ffff5",
+      "group_id": "flask-410e5ab7ed0ef326fa8b5164a633863f137ffff5",
+      "paths": [
+        "src/flask/typing.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Response typing change, selected to balance security-looking runtime edits.",
+      "selection_tags": [
+        "application",
+        "hard-negative-candidate"
+      ],
+      "expected_input_hash": "3b046cb3b466ef7a34302c9412ec3cef42dcc37886eeef54f69c84ff47a07ac9"
+    },
+    {
+      "id": "Cfc43f8206913",
+      "project": "flask",
+      "parent": "73ce26c3e822cdc2ccf99625619a50c91f163f8d",
+      "revision": "bfffe87d4c2ea255b9a51432bebb3d28741245c4",
+      "group_id": "flask-bfffe87d4c2ea255b9a51432bebb3d28741245c4",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2216a6688328",
+      "project": "flask",
+      "parent": "2732c4db66763462c2795d2287b61d4f77031342",
+      "revision": "41ec5760a2c55a099c3a1733fdd36fbb1258a02b",
+      "group_id": "flask-41ec5760a2c55a099c3a1733fdd36fbb1258a02b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8a37823835b5",
+      "project": "flask",
+      "parent": "315ebc11765ed3b9da8b5271602e89a403376c24",
+      "revision": "c94d2a77db0102a7cf8ceec7804f366f180c373f",
+      "group_id": "flask-c94d2a77db0102a7cf8ceec7804f366f180c373f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C98e6ec75dc7b",
+      "project": "flask",
+      "parent": "c7c8dc38ea2890d62b7aaff7e4c016e4b98101b0",
+      "revision": "7d5d1874581209f66ad7bcdfb7f85b2b9a7ca471",
+      "group_id": "flask-7d5d1874581209f66ad7bcdfb7f85b2b9a7ca471",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb755877aa49e",
+      "project": "flask",
+      "parent": "5ea0ab8ea21b0c11ee6098e6b052463687af602a",
+      "revision": "2ae36c8dd5c9d24578d9fca85f8c351290d0de04",
+      "group_id": "flask-2ae36c8dd5c9d24578d9fca85f8c351290d0de04",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3e4d90c688ef",
+      "project": "flask",
+      "parent": "08c480b3b31e896698bb773069026a61eb53d158",
+      "revision": "da600394865c06a4772c433c1a560453dcf4f868",
+      "group_id": "flask-da600394865c06a4772c433c1a560453dcf4f868",
+      "paths": [
+        "src/flask/cli.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Ordinary command help handling change.",
+      "selection_tags": [
+        "application",
+        "ordinary"
+      ],
+      "expected_input_hash": "ea052a2d3a4520ece75956153326eb93993ebcaa95320bb0558381ba730e399f"
+    },
+    {
+      "id": "C04ad384abf9d",
+      "project": "flask",
+      "parent": "04b070fa26b346b48bd66d317e72de75e001a2e7",
+      "revision": "f51a23839aa55aee2f2a9196c344df6eecd854d7",
+      "group_id": "flask-f51a23839aa55aee2f2a9196c344df6eecd854d7",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf7068cd4d0f6",
+      "project": "flask",
+      "parent": "165af0a090e229e94ccd93896efc15b9fe0488da",
+      "revision": "75a8327cfd6eb912e469a8a613151d7ee50a1c1c",
+      "group_id": "flask-75a8327cfd6eb912e469a8a613151d7ee50a1c1c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cc44ed53f0aee",
+      "project": "flask",
+      "parent": "235c52fa10094135746d04a5b6a7bea8125357f0",
+      "revision": "165af0a090e229e94ccd93896efc15b9fe0488da",
+      "group_id": "flask-165af0a090e229e94ccd93896efc15b9fe0488da",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C6a46c5540c1c",
+      "project": "flask",
+      "parent": "959052fb8d49c4473f6d8a928d745ae7c38c7e95",
+      "revision": "235c52fa10094135746d04a5b6a7bea8125357f0",
+      "group_id": "flask-235c52fa10094135746d04a5b6a7bea8125357f0",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd469964fd6d4",
+      "project": "flask",
+      "parent": "5b525e97970b1b9706b4415de79abfe33e5955fc",
+      "revision": "959052fb8d49c4473f6d8a928d745ae7c38c7e95",
+      "group_id": "flask-959052fb8d49c4473f6d8a928d745ae7c38c7e95",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2d26e6a12e38",
+      "project": "flask",
+      "parent": "f2674c5bb4f7a79f836069859a346b81771eeee5",
+      "revision": "5b525e97970b1b9706b4415de79abfe33e5955fc",
+      "group_id": "flask-5b525e97970b1b9706b4415de79abfe33e5955fc",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cdb9f8ef64def",
+      "project": "flask",
+      "parent": "ea08f155d8d37d515559534bbe0f80ef5185466c",
+      "revision": "54c3f87af9f6c0d6622cec2c3d9695b0229fb8fa",
+      "group_id": "flask-54c3f87af9f6c0d6622cec2c3d9695b0229fb8fa",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf5b42d0d301b",
+      "project": "flask",
+      "parent": "dcbe86bd1577bad9a1356acca5fced7d3fb3a0c3",
+      "revision": "b394a994e6d632643d0061e0e67772f076925951",
+      "group_id": "flask-b394a994e6d632643d0061e0e67772f076925951",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cfd5f9113170f",
+      "project": "flask",
+      "parent": "18ffe1eaf6c2eeffc898f4e8a590c062c40b30dc",
+      "revision": "dcbe86bd1577bad9a1356acca5fced7d3fb3a0c3",
+      "group_id": "flask-dcbe86bd1577bad9a1356acca5fced7d3fb3a0c3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ccf24e2df0d58",
+      "project": "flask",
+      "parent": "bc098406af9537aacc436cb2ea777fbc9ff4c5aa",
+      "revision": "18ffe1eaf6c2eeffc898f4e8a590c062c40b30dc",
+      "group_id": "flask-18ffe1eaf6c2eeffc898f4e8a590c062c40b30dc",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cbab7ca11ff54",
+      "project": "flask",
+      "parent": "70602a196a6da90eb0d34cdfe5d4d16a99606279",
+      "revision": "ab8149664182b662453a563161aa89013c806dc9",
+      "group_id": "flask-ab8149664182b662453a563161aa89013c806dc9",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C4c428aca9317",
+      "project": "flask",
+      "parent": "6748a09341deeac16acb33996df95a31fae0c545",
+      "revision": "70602a196a6da90eb0d34cdfe5d4d16a99606279",
+      "group_id": "flask-70602a196a6da90eb0d34cdfe5d4d16a99606279",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cc4448cf51835",
+      "project": "flask",
+      "parent": "22c48a738b5fb5b5cf09fb77270139f116069748",
+      "revision": "6748a09341deeac16acb33996df95a31fae0c545",
+      "group_id": "flask-6748a09341deeac16acb33996df95a31fae0c545",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C60ef9cb35d81",
+      "project": "flask",
+      "parent": "7b21d43d4c763b874bc86d4c2d69a48ee492dc22",
+      "revision": "f49dbfd3e451006a485e81ebce030495131c4454",
+      "group_id": "flask-f49dbfd3e451006a485e81ebce030495131c4454",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cad9171041663",
+      "project": "flask",
+      "parent": "10bdf61a0f751f3cb000f8f8ac5ac5b4bb535677",
+      "revision": "4f7156f2c3271613b34d04040b502b9d7ae35eb9",
+      "group_id": "flask-4f7156f2c3271613b34d04040b502b9d7ae35eb9",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb0e2c46bfa43",
+      "project": "flask",
+      "parent": "07c7d5730a2685ef2281cc635e289685e5c3d478",
+      "revision": "4995a775df21a206b529403bc30d71795a994fd4",
+      "group_id": "flask-4995a775df21a206b529403bc30d71795a994fd4",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cacf01fccddcc",
+      "project": "flask",
+      "parent": "a20bcff8dc4e263312cfd74c11e432bfe8c194c1",
+      "revision": "470e2b8d17fd0032271b21f1d6775d48c3855a79",
+      "group_id": "flask-470e2b8d17fd0032271b21f1d6775d48c3855a79",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ccb80855aa339",
+      "project": "flask",
+      "parent": "7522c4bcdb10449dc919e0ffbdebb92fe66822b5",
+      "revision": "e13373f838ab34027c5a80e16a6cb8262d41eab7",
+      "group_id": "flask-e13373f838ab34027c5a80e16a6cb8262d41eab7",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C16a70f9299ba",
+      "project": "flask",
+      "parent": "ce08bc704e24c01582052f5c544fae181d08386f",
+      "revision": "2c3160304278d323da8485057770926d1b582579",
+      "group_id": "flask-2c3160304278d323da8485057770926d1b582579",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cfd2034111c5e",
+      "project": "flask",
+      "parent": "98ae71897600a3162f529b1b30c70b8abdf0961b",
+      "revision": "6c44dd4bb8e4f2ca5f135f172de4725b2cada155",
+      "group_id": "flask-6c44dd4bb8e4f2ca5f135f172de4725b2cada155",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1569c80584ee",
+      "project": "flask",
+      "parent": "c62b03bcfd6e6440f8195e02f4678488e16121ac",
+      "revision": "98ae71897600a3162f529b1b30c70b8abdf0961b",
+      "group_id": "flask-98ae71897600a3162f529b1b30c70b8abdf0961b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cdc1ad25318bd",
+      "project": "flask",
+      "parent": "8aa161a43731795841fa2678d3dff0559cee527e",
+      "revision": "a9b99b3489cc24b5bed99fbadbd91f598a5a1420",
+      "group_id": "flask-a9b99b3489cc24b5bed99fbadbd91f598a5a1420",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1500cd9869d5",
+      "project": "flask",
+      "parent": "df201ed152b61c439ea1ace179f35b424594ba6c",
+      "revision": "8aa161a43731795841fa2678d3dff0559cee527e",
+      "group_id": "flask-8aa161a43731795841fa2678d3dff0559cee527e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C839696f22cb6",
+      "project": "flask",
+      "parent": "96800fb673cb7b2d75476096798e701e3e6d26bc",
+      "revision": "df201ed152b61c439ea1ace179f35b424594ba6c",
+      "group_id": "flask-df201ed152b61c439ea1ace179f35b424594ba6c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf8e8ebef5c8e",
+      "project": "flask",
+      "parent": "6f2014d353d514e404c1f40e8f0a24e2bf62b941",
+      "revision": "9efc1ebeeb431769897798cdf8de2c67dcbbc9c0",
+      "group_id": "flask-9efc1ebeeb431769897798cdf8de2c67dcbbc9c0",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7de106858728",
+      "project": "flask",
+      "parent": "62c56e08c43f5eb174d15dd050591cfba9aed548",
+      "revision": "c7a53888a1a514619b0611fd8b7928592f4ed612",
+      "group_id": "flask-c7a53888a1a514619b0611fd8b7928592f4ed612",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3b19722c7439",
+      "project": "flask",
+      "parent": "39e7208366bcf549fd7a2678a6d815dfe39196c5",
+      "revision": "8f37c82f6144fffc2ed30e49ee81a54702a0f317",
+      "group_id": "flask-8f37c82f6144fffc2ed30e49ee81a54702a0f317",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cfea3f7b8e127",
+      "project": "flask",
+      "parent": "227838c4727ba780e6fb4a7c372ae62357cac4c6",
+      "revision": "39e7208366bcf549fd7a2678a6d815dfe39196c5",
+      "group_id": "flask-39e7208366bcf549fd7a2678a6d815dfe39196c5",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C052270830a8a",
+      "project": "flask",
+      "parent": "99ce7ed0e40686ec2583f90bd1cca37a207b4ea7",
+      "revision": "227838c4727ba780e6fb4a7c372ae62357cac4c6",
+      "group_id": "flask-227838c4727ba780e6fb4a7c372ae62357cac4c6",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce0a262debe51",
+      "project": "flask",
+      "parent": "e8b91cd38aadafdf733558bbcea4810fa65bb849",
+      "revision": "1d610e44b396d11113bb6a5d168cc5e996a6dfb9",
+      "group_id": "flask-1d610e44b396d11113bb6a5d168cc5e996a6dfb9",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C5eb34dc52f06",
+      "project": "flask",
+      "parent": "5e8cb740187c0561b36323dfc8510e58c3066838",
+      "revision": "9e831e915fa875423af0c0de8f53a3780055919e",
+      "group_id": "flask-9e831e915fa875423af0c0de8f53a3780055919e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7491875b8ee4",
+      "project": "flask",
+      "parent": "2778b7c23f37d4f3cfed4cadac4bc9c90e098c50",
+      "revision": "5e8cb740187c0561b36323dfc8510e58c3066838",
+      "group_id": "flask-5e8cb740187c0561b36323dfc8510e58c3066838",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8c34ffb8308a",
+      "project": "flask",
+      "parent": "8f2bc008ad724a52f3669ecb2de59c98deb69ce1",
+      "revision": "96800fb673cb7b2d75476096798e701e3e6d26bc",
+      "group_id": "flask-96800fb673cb7b2d75476096798e701e3e6d26bc",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf5f5feff4094",
+      "project": "flask",
+      "parent": "68150d4cafc796dba2b595c320a09222394bfc1a",
+      "revision": "8f2bc008ad724a52f3669ecb2de59c98deb69ce1",
+      "group_id": "flask-8f2bc008ad724a52f3669ecb2de59c98deb69ce1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3a9166542426",
+      "project": "flask",
+      "parent": "d273f87a41e72db8ef1387f469ffa1c6eed39730",
+      "revision": "74721b48f0347f19f134f386fab3421e5132fb53",
+      "group_id": "flask-74721b48f0347f19f134f386fab3421e5132fb53",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C03c0bcca2837",
+      "project": "flask",
+      "parent": "b337d210583a3f5f84d0f70b56ae9a82b029dab5",
+      "revision": "52ccd66735ba1f6e67d06e747d6a641980b788a3",
+      "group_id": "flask-52ccd66735ba1f6e67d06e747d6a641980b788a3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ccf1e0c75b4f1",
+      "project": "flask",
+      "parent": "c5a5576522273ff028018c4e13d1fc4d0260495b",
+      "revision": "dffe3034825edc4f84aded013fc9c6590e545ed5",
+      "group_id": "flask-dffe3034825edc4f84aded013fc9c6590e545ed5",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf670e1391b6c",
+      "project": "flask",
+      "parent": "bca18041b055102857a7e8a12f8694fddda9571b",
+      "revision": "c5a5576522273ff028018c4e13d1fc4d0260495b",
+      "group_id": "flask-c5a5576522273ff028018c4e13d1fc4d0260495b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cbada5f918e91",
+      "project": "flask",
+      "parent": "c77b099cbb979269d45df06753cadd8abc662e23",
+      "revision": "b337d210583a3f5f84d0f70b56ae9a82b029dab5",
+      "group_id": "flask-b337d210583a3f5f84d0f70b56ae9a82b029dab5",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2ede7cd127b7",
+      "project": "flask",
+      "parent": "c77b099cbb979269d45df06753cadd8abc662e23",
+      "revision": "e63ead4208c1e56723532878728ef9c2eb197b01",
+      "group_id": "flask-e63ead4208c1e56723532878728ef9c2eb197b01",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C4d5b5847fd0e",
+      "project": "flask",
+      "parent": "111e5bd3129deee54ff62b0d13ed7e5739c27108",
+      "revision": "2fec0b206c6e83ea813ab26597e15c96fab08be7",
+      "group_id": "flask-2fec0b206c6e83ea813ab26597e15c96fab08be7",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cca8c4e8200bb",
+      "project": "flask",
+      "parent": "db49548d7168bba319fdba400bc201528cb1d3cd",
+      "revision": "111e5bd3129deee54ff62b0d13ed7e5739c27108",
+      "group_id": "flask-111e5bd3129deee54ff62b0d13ed7e5739c27108",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1c24c6678e5e",
+      "project": "flask",
+      "parent": "f93dd6e826a9bf00bf9e08d9bb3a03abcb1e974c",
+      "revision": "db49548d7168bba319fdba400bc201528cb1d3cd",
+      "group_id": "flask-db49548d7168bba319fdba400bc201528cb1d3cd",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce5dc7daccf68",
+      "project": "flask",
+      "parent": "7e5307030743b1f198da38c36f83fd279bad4529",
+      "revision": "f93dd6e826a9bf00bf9e08d9bb3a03abcb1e974c",
+      "group_id": "flask-f93dd6e826a9bf00bf9e08d9bb3a03abcb1e974c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C670bc5004ba6",
+      "project": "flask",
+      "parent": "40b78fa2ea9095197608287de9f0d902d2763b00",
+      "revision": "c77b099cbb979269d45df06753cadd8abc662e23",
+      "group_id": "flask-c77b099cbb979269d45df06753cadd8abc662e23",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca0c247ce9ff3",
+      "project": "flask",
+      "parent": "2c5d652493b79eecadd4407f24f2249948bd6ff2",
+      "revision": "40b78fa2ea9095197608287de9f0d902d2763b00",
+      "group_id": "flask-40b78fa2ea9095197608287de9f0d902d2763b00",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd04c7e571d37",
+      "project": "flask",
+      "parent": "176fdfa0002360670f698d3828cfff11f97349f0",
+      "revision": "2c5d652493b79eecadd4407f24f2249948bd6ff2",
+      "group_id": "flask-2c5d652493b79eecadd4407f24f2249948bd6ff2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0f341f299d89",
+      "project": "flask",
+      "parent": "2d31dce8262a68875c177645fa0c7585a45ac447",
+      "revision": "176fdfa0002360670f698d3828cfff11f97349f0",
+      "group_id": "flask-176fdfa0002360670f698d3828cfff11f97349f0",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7cd0e02c5830",
+      "project": "flask",
+      "parent": "29a94bd102805eafcea94a185808cd878cd3f5ad",
+      "revision": "2d31dce8262a68875c177645fa0c7585a45ac447",
+      "group_id": "flask-2d31dce8262a68875c177645fa0c7585a45ac447",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf5599ffeed43",
+      "project": "werkzeug",
+      "parent": "ba15683fb30b51187fa7efa9d212a030ad6ddb94",
+      "revision": "6389612fd1ee1bd93579eed5026e8fd471d04abd",
+      "group_id": "werkzeug-6389612fd1ee1bd93579eed5026e8fd471d04abd",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C83c4a275c961",
+      "project": "werkzeug",
+      "parent": "598bb1de78678107404493e56d68003910e1dbea",
+      "revision": "d99f72d12698d86e7ebcb894f3c6c729e2b6c067",
+      "group_id": "werkzeug-d99f72d12698d86e7ebcb894f3c6c729e2b6c067",
+      "paths": [
+        "src/werkzeug/sansio/utils.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "IPv6 host formatting fix, selected as ordinary input handling.",
+      "selection_tags": [
+        "application",
+        "ordinary"
+      ],
+      "expected_input_hash": "dccb0465afdcf9efe78658cc3dbc0a7a14abf30a48cd0517ad58d6a5c966c440"
+    },
+    {
+      "id": "C5fb8820c19fa",
+      "project": "werkzeug",
+      "parent": "1a1728ed88939ca68928dade168e1989be062c6f",
+      "revision": "598bb1de78678107404493e56d68003910e1dbea",
+      "group_id": "werkzeug-598bb1de78678107404493e56d68003910e1dbea",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8ac8915ddbc2",
+      "project": "werkzeug",
+      "parent": "4fd7073b730d0b98288df91330a1b2b8dbec2bc2",
+      "revision": "1a1728ed88939ca68928dade168e1989be062c6f",
+      "group_id": "werkzeug-1a1728ed88939ca68928dade168e1989be062c6f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C4bade95bc307",
+      "project": "werkzeug",
+      "parent": "1803db6f4033e78ff56eb1eadaf6395644dc3e8e",
+      "revision": "4764684faffa7232ac68b7e089bc2d0fdfff3303",
+      "group_id": "werkzeug-4764684faffa7232ac68b7e089bc2d0fdfff3303",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ccd2ab1a3d733",
+      "project": "werkzeug",
+      "parent": "13170140d383404a2ee98dd2740d00061d3f5b10",
+      "revision": "ac87bf835f36e03e28a3546868dd730824e85fc3",
+      "group_id": "werkzeug-ac87bf835f36e03e28a3546868dd730824e85fc3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C557bcca14242",
+      "project": "werkzeug",
+      "parent": "f27e476144f973d2bc3df42cfd562be4c33bbcfe",
+      "revision": "acdf7faf210596243a2484fe06a3b46c8c6c492d",
+      "group_id": "werkzeug-acdf7faf210596243a2484fe06a3b46c8c6c492d",
+      "paths": [
+        "src/werkzeug/datastructures/headers.py",
+        "src/werkzeug/datastructures/structures.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Callable typing refinement in request-related data structures.",
+      "selection_tags": [
+        "application",
+        "hard-negative-candidate"
+      ],
+      "expected_input_hash": "739b44f2927b485e216746e84f3f651514b4e15e96ca71165ab4e1b2d33f611a"
+    },
+    {
+      "id": "Ca579b0a24af6",
+      "project": "werkzeug",
+      "parent": "07af92d053cfb5b387e05c555538dc5270ade565",
+      "revision": "f27e476144f973d2bc3df42cfd562be4c33bbcfe",
+      "group_id": "werkzeug-f27e476144f973d2bc3df42cfd562be4c33bbcfe",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1edf078cd509",
+      "project": "werkzeug",
+      "parent": "64d27f79eb84880b33f4451e078dab0b49c4c2c2",
+      "revision": "82ad3061566b68ef3ea01aa8b728787c832d0686",
+      "group_id": "werkzeug-82ad3061566b68ef3ea01aa8b728787c832d0686",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C9d715375c5dc",
+      "project": "werkzeug",
+      "parent": "d1f60d68ac9788aec05712aca29867abd00d5cc3",
+      "revision": "afc4ea7b5e969d501194d8acdc88025f877a5510",
+      "group_id": "werkzeug-afc4ea7b5e969d501194d8acdc88025f877a5510",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C12a06a378bf2",
+      "project": "werkzeug",
+      "parent": "0d345ce8c6eb2aae3071f2d65c51250f0711608b",
+      "revision": "d1f60d68ac9788aec05712aca29867abd00d5cc3",
+      "group_id": "werkzeug-d1f60d68ac9788aec05712aca29867abd00d5cc3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3090fa48bb17",
+      "project": "werkzeug",
+      "parent": "564835a6b5928d7240f636a13d80d69359cd86f5",
+      "revision": "df655e6ce6bc77adc7833619a079e66eba566aee",
+      "group_id": "werkzeug-df655e6ce6bc77adc7833619a079e66eba566aee",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C11c808b70325",
+      "project": "werkzeug",
+      "parent": "1735b751338ed5c9db0771344a61b6410edcadc0",
+      "revision": "564835a6b5928d7240f636a13d80d69359cd86f5",
+      "group_id": "werkzeug-564835a6b5928d7240f636a13d80d69359cd86f5",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7ee0519cf0fb",
+      "project": "werkzeug",
+      "parent": "fa387288bd2ffccedc632ccdffb0f3f1c0b25ece",
+      "revision": "b0f361ce69038a55f7ca8cfb6262ddc5ffe1eeea",
+      "group_id": "werkzeug-b0f361ce69038a55f7ca8cfb6262ddc5ffe1eeea",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C00026fdc3a0c",
+      "project": "werkzeug",
+      "parent": "1eb7ada4dcce1667e0964cb1bc122de3f1ae0279",
+      "revision": "e3a50c9ac130658e15bc8e8a4555a58379006cba",
+      "group_id": "werkzeug-e3a50c9ac130658e15bc8e8a4555a58379006cba",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2d817293d2af",
+      "project": "werkzeug",
+      "parent": "862cb193c2b13db860d886725fa4235173d0dfcd",
+      "revision": "b65b587aa12ec40df1eecb4c6aadaf8de8931187",
+      "group_id": "werkzeug-b65b587aa12ec40df1eecb4c6aadaf8de8931187",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf76eb8c7deaa",
+      "project": "werkzeug",
+      "parent": "e9f87fdcdacb84c0647742b3c156b896982ee5b2",
+      "revision": "e550ef8b313324d2efc0b9385be4c8c5739df36b",
+      "group_id": "werkzeug-e550ef8b313324d2efc0b9385be4c8c5739df36b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cbec52974cf5d",
+      "project": "werkzeug",
+      "parent": "1db190bac88bc173989e3703bbb4799ab56675cf",
+      "revision": "e9f87fdcdacb84c0647742b3c156b896982ee5b2",
+      "group_id": "werkzeug-e9f87fdcdacb84c0647742b3c156b896982ee5b2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C5a9498427c12",
+      "project": "werkzeug",
+      "parent": "37b9423dfdb53df8cb94b94964064965efcf9e76",
+      "revision": "3720e3e84d7de619356e0b5fddb8b342d81d975d",
+      "group_id": "werkzeug-3720e3e84d7de619356e0b5fddb8b342d81d975d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C26e8b09fa34b",
+      "project": "werkzeug",
+      "parent": "7e22812f390df94809b01c93f6849901e1be0de4",
+      "revision": "0294d88b9c10fe079ecfe9e02129d52b1e95de54",
+      "group_id": "werkzeug-0294d88b9c10fe079ecfe9e02129d52b1e95de54",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C9f18d985ba45",
+      "project": "werkzeug",
+      "parent": "2139fa0b2cad96053f807384a6d04d8d09717802",
+      "revision": "763609ae21a1d8d649ca19f30c61257fbee670c1",
+      "group_id": "werkzeug-763609ae21a1d8d649ca19f30c61257fbee670c1",
+      "paths": [
+        "src/werkzeug/security.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Password-derivation work-factor change; security relevance does not imply a newly introduced vulnerability.",
+      "selection_tags": [
+        "application",
+        "security-sensitive-change"
+      ],
+      "expected_input_hash": "327854627f9742d093d0ec90068a1c91b2aab7b7069f685d43a50ea6faa54db7"
+    },
+    {
+      "id": "C5214a26c2b36",
+      "project": "werkzeug",
+      "parent": "bf9873b676958922b1d78306bfe03fe9bec7bf1c",
+      "revision": "c1477605c5f237dd1d4230756d70634b616c520b",
+      "group_id": "werkzeug-c1477605c5f237dd1d4230756d70634b616c520b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3a2704323ec1",
+      "project": "werkzeug",
+      "parent": "0839766b63958b127cadf4735bf172b636882591",
+      "revision": "8e62ad62b0cf3d1ab460e9a4603cf0c5ccde256b",
+      "group_id": "werkzeug-8e62ad62b0cf3d1ab460e9a4603cf0c5ccde256b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C807bb099e37c",
+      "project": "werkzeug",
+      "parent": "2ed6d7e16b145fe6e2bbf6434c572802e2fda7d8",
+      "revision": "d27debc32f29ebd1677940cd307788fd65667ff5",
+      "group_id": "werkzeug-d27debc32f29ebd1677940cd307788fd65667ff5",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cea1d5082ac00",
+      "project": "werkzeug",
+      "parent": "73b2b0536529505ea1536f457fb372836d8ce704",
+      "revision": "f83df43099116823734feda8114c3b08d1031033",
+      "group_id": "werkzeug-f83df43099116823734feda8114c3b08d1031033",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C78cbbfb5777c",
+      "project": "werkzeug",
+      "parent": "e8292658623bf6607d996e254d1f51ee41b9575f",
+      "revision": "73b2b0536529505ea1536f457fb372836d8ce704",
+      "group_id": "werkzeug-73b2b0536529505ea1536f457fb372836d8ce704",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C082576978bd6",
+      "project": "werkzeug",
+      "parent": "3a4126da6dc094b1a20a2fe5d6b132e8b2382bb8",
+      "revision": "e8292658623bf6607d996e254d1f51ee41b9575f",
+      "group_id": "werkzeug-e8292658623bf6607d996e254d1f51ee41b9575f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2e3ee11ad82d",
+      "project": "werkzeug",
+      "parent": "849a70842d9a0ae2492dfe1381eb041036e884f3",
+      "revision": "3a4126da6dc094b1a20a2fe5d6b132e8b2382bb8",
+      "group_id": "werkzeug-3a4126da6dc094b1a20a2fe5d6b132e8b2382bb8",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cfd8d052c860e",
+      "project": "werkzeug",
+      "parent": "87bf5464db78af17375802d5354b96e98398ca6e",
+      "revision": "14c5d990215dc90fa92132ee7dc56efa2c0f67c2",
+      "group_id": "werkzeug-14c5d990215dc90fa92132ee7dc56efa2c0f67c2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cdf080c34fb3f",
+      "project": "werkzeug",
+      "parent": "7ff62c96bb4922c6397bdf4287cf5f2cd38abb86",
+      "revision": "06e5094161c304017540b7efafe0d136b9879966",
+      "group_id": "werkzeug-06e5094161c304017540b7efafe0d136b9879966",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C42dda657816e",
+      "project": "werkzeug",
+      "parent": "f028c21027b9e602aff399b3af71a7dd127a4774",
+      "revision": "7ff62c96bb4922c6397bdf4287cf5f2cd38abb86",
+      "group_id": "werkzeug-7ff62c96bb4922c6397bdf4287cf5f2cd38abb86",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C96bdeeb784af",
+      "project": "werkzeug",
+      "parent": "f95ddda868724179b2448c8e2fdd2e678c035591",
+      "revision": "437cf6fccb10a313c6c620e2da7b58729aa853b9",
+      "group_id": "werkzeug-437cf6fccb10a313c6c620e2da7b58729aa853b9",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0cf1096292c3",
+      "project": "werkzeug",
+      "parent": "2767bcb10a7dd1c297d812cc5e6d11a474c1f092",
+      "revision": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "group_id": "werkzeug-5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C231d296d8c06",
+      "project": "werkzeug",
+      "parent": "50cfeebcb0727e18cc52ffbeb125f4a66551179b",
+      "revision": "87cc78a25f782f8c59fbde786840a00cf0d09b3d",
+      "group_id": "werkzeug-87cc78a25f782f8c59fbde786840a00cf0d09b3d",
+      "paths": [
+        "src/werkzeug/security.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Safe-join platform edge case described in upstream GHSA-f9vj-2wh5-fj8j; advisory text excluded from input.",
+      "selection_tags": [
+        "application",
+        "security-fix"
+      ],
+      "expected_input_hash": "8fa11b82744821276c84fda2669f0baa44ca9d50fb4d0b50ab786aada3513f43"
+    },
+    {
+      "id": "Cc7eaf6c5ee17",
+      "project": "werkzeug",
+      "parent": "8d6a12e2af542a553853c870d106884a3cd1f73b",
+      "revision": "8760275afb72bd10b57d92cb4d52abf759b2f3a7",
+      "group_id": "werkzeug-8760275afb72bd10b57d92cb4d52abf759b2f3a7",
+      "paths": [
+        "src/werkzeug/formparser.py",
+        "src/werkzeug/sansio/multipart.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Multipart input size accounting change across two implementation files.",
+      "selection_tags": [
+        "application",
+        "security-sensitive-change"
+      ],
+      "expected_input_hash": "d5ce8e83cd0e22454b62bb9d8d95d652768bc95b76233c11bff1086dc54a6c34"
+    },
+    {
+      "id": "Cff042fd4c120",
+      "project": "werkzeug",
+      "parent": "a7b121abc781b9a6557ca204f23247db654d0253",
+      "revision": "8d6a12e2af542a553853c870d106884a3cd1f73b",
+      "group_id": "werkzeug-8d6a12e2af542a553853c870d106884a3cd1f73b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf25db50b939e",
+      "project": "werkzeug",
+      "parent": "e28a2451e99457ce71e460af276a02f27a3bdba1",
+      "revision": "9caf72ac060181a3171d91fd12279e071df430ca",
+      "group_id": "werkzeug-9caf72ac060181a3171d91fd12279e071df430ca",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C12bc763aff9b",
+      "project": "werkzeug",
+      "parent": "5661b960fcf21a9ad851c5ccb631fb8b6b74a494",
+      "revision": "e6b4cce97eef17716004625bcf6754fa930f2618",
+      "group_id": "werkzeug-e6b4cce97eef17716004625bcf6754fa930f2618",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0b662da06693",
+      "project": "werkzeug",
+      "parent": "6732b579eeaaa2cfb562e57bed55994e4f93ccfb",
+      "revision": "e14f4e0693aea2b300f163f35809be110c1b6304",
+      "group_id": "werkzeug-e14f4e0693aea2b300f163f35809be110c1b6304",
+      "paths": [
+        "src/werkzeug/middleware/shared_data.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Type-annotation change in filesystem middleware; runtime authorization cannot be inferred from the filename.",
+      "selection_tags": [
+        "application",
+        "hard-negative-candidate"
+      ],
+      "expected_input_hash": "b4fd677b4d2af944c07380ed4afb03a06593c655b4f8912fe65177d2973096bd"
+    },
+    {
+      "id": "C0c5244c3ef86",
+      "project": "werkzeug",
+      "parent": "40319f91dbbae0a780526eab037a009b1a7e4d36",
+      "revision": "1688968101c3341136bd8420ac7b77b6286c7409",
+      "group_id": "werkzeug-1688968101c3341136bd8420ac7b77b6286c7409",
+      "paths": [
+        "src/werkzeug/http.py"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Authorization parameter parsing change; include alongside ordinary and typing-only input changes.",
+      "selection_tags": [
+        "application",
+        "security-sensitive-change"
+      ],
+      "expected_input_hash": "b475bea3adb7aaa5d739e95770a45bf42e7b25082621b3643115aaac54cf4a2a"
+    },
+    {
+      "id": "C5aaf49ce930f",
+      "project": "werkzeug",
+      "parent": "bcc9302b6199c087defa35e5fd0d98fb8e7690d8",
+      "revision": "7326de64ea7d1ba783bb372144d59e7433113b68",
+      "group_id": "werkzeug-7326de64ea7d1ba783bb372144d59e7433113b68",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd966cd871da4",
+      "project": "werkzeug",
+      "parent": "eb13b56e7826df97c8cacd1c86e4a5a560daa7f6",
+      "revision": "cfe71ee9d53d612c39801e32a1258c6eb1e52f75",
+      "group_id": "werkzeug-cfe71ee9d53d612c39801e32a1258c6eb1e52f75",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cbe2ab0be32a5",
+      "project": "werkzeug",
+      "parent": "889eafd9f9bfbbdabed67a428637d643e8962bad",
+      "revision": "eb13b56e7826df97c8cacd1c86e4a5a560daa7f6",
+      "group_id": "werkzeug-eb13b56e7826df97c8cacd1c86e4a5a560daa7f6",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca8c8f73852b3",
+      "project": "werkzeug",
+      "parent": "454ddcdf637b4a5a6e873775d19f5cf135552dd1",
+      "revision": "ff507c521736bbfb900512f115c7dfd91e284637",
+      "group_id": "werkzeug-ff507c521736bbfb900512f115c7dfd91e284637",
+      "paths": [
+        ".github/workflows/pre-commit.yaml"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Workflow trigger change, distinct from runtime code.",
+      "selection_tags": [
+        "ci",
+        "ordinary"
+      ],
+      "expected_input_hash": "9d34ad5267afc8cf9eb49fab0dbedd9a89c446da092e046e1fd1520baea8a1b4"
+    },
+    {
+      "id": "C8fba241d31db",
+      "project": "werkzeug",
+      "parent": "2b4ab69864d73b2e2e9055dee0db7862bffc6a71",
+      "revision": "889eafd9f9bfbbdabed67a428637d643e8962bad",
+      "group_id": "werkzeug-889eafd9f9bfbbdabed67a428637d643e8962bad",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1408bda9c29d",
+      "project": "werkzeug",
+      "parent": "0c8136bd10ff2b685efbeb3abc340e4a9fef9be1",
+      "revision": "2b4ab69864d73b2e2e9055dee0db7862bffc6a71",
+      "group_id": "werkzeug-2b4ab69864d73b2e2e9055dee0db7862bffc6a71",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cafd6eb4ae1d1",
+      "project": "werkzeug",
+      "parent": "29085a940225f039846e2498502033eb97b3b258",
+      "revision": "59abac80cacba2afa5172408b38053edd16b192f",
+      "group_id": "werkzeug-59abac80cacba2afa5172408b38053edd16b192f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd9cf648f29d3",
+      "project": "werkzeug",
+      "parent": "3d4dd8e60aadd4fcd44370ffff7f996225173ec4",
+      "revision": "29085a940225f039846e2498502033eb97b3b258",
+      "group_id": "werkzeug-29085a940225f039846e2498502033eb97b3b258",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf1415d5ad385",
+      "project": "werkzeug",
+      "parent": "e664aa7fe4b0e53f870bd2788516b25007f4399e",
+      "revision": "3d4dd8e60aadd4fcd44370ffff7f996225173ec4",
+      "group_id": "werkzeug-3d4dd8e60aadd4fcd44370ffff7f996225173ec4",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce3129df5c613",
+      "project": "werkzeug",
+      "parent": "3ab332063ece8710b94809d925047f58f2471bb1",
+      "revision": "e664aa7fe4b0e53f870bd2788516b25007f4399e",
+      "group_id": "werkzeug-e664aa7fe4b0e53f870bd2788516b25007f4399e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce9c3abf6f38a",
+      "project": "werkzeug",
+      "parent": "36c4b0fa51714efc12805f44d6629fdf8e4d19ec",
+      "revision": "0c8136bd10ff2b685efbeb3abc340e4a9fef9be1",
+      "group_id": "werkzeug-0c8136bd10ff2b685efbeb3abc340e4a9fef9be1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf188b7f3a8b8",
+      "project": "werkzeug",
+      "parent": "dca8cb620828c775c6b644311b2f08c12055a2c3",
+      "revision": "36c4b0fa51714efc12805f44d6629fdf8e4d19ec",
+      "group_id": "werkzeug-36c4b0fa51714efc12805f44d6629fdf8e4d19ec",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0f366ede1030",
+      "project": "werkzeug",
+      "parent": "eed59db046d5cf85055ebd7574e0cb8a20f42482",
+      "revision": "dca8cb620828c775c6b644311b2f08c12055a2c3",
+      "group_id": "werkzeug-dca8cb620828c775c6b644311b2f08c12055a2c3",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0c7a8f68aafd",
+      "project": "werkzeug",
+      "parent": "c09de7301c7c5455772a7cd0a4ca4323a90c8186",
+      "revision": "b933ccb1f5eaf378d15ae88488bf993600fdca43",
+      "group_id": "werkzeug-b933ccb1f5eaf378d15ae88488bf993600fdca43",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C35bcd4b1c777",
+      "project": "werkzeug",
+      "parent": "32a77a032a25a7e0c0bbbd1ce2d297268170469f",
+      "revision": "1d1d987f6399031d33656d366b7bfa9a3960441b",
+      "group_id": "werkzeug-1d1d987f6399031d33656d366b7bfa9a3960441b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca9eb8398fd76",
+      "project": "werkzeug",
+      "parent": "a1db1209822c5572c177244678e6788add64bf3d",
+      "revision": "cf18d037faeacfb458e645fa2dbaf25b5bbf1080",
+      "group_id": "werkzeug-cf18d037faeacfb458e645fa2dbaf25b5bbf1080",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1fca4627d0e0",
+      "project": "werkzeug",
+      "parent": "7abec4b50efdfdf791cebf0019a0fb901f46680e",
+      "revision": "650481972fbab9e9d8f0b1af23c4fb6a88b4e8c0",
+      "group_id": "werkzeug-650481972fbab9e9d8f0b1af23c4fb6a88b4e8c0",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C9c0eb225b8e5",
+      "project": "werkzeug",
+      "parent": "3a52597930846900356ee59b06a349420ca12c9b",
+      "revision": "3a893d27b1a1b7da7a8ec52c297ba163371ddf71",
+      "group_id": "werkzeug-3a893d27b1a1b7da7a8ec52c297ba163371ddf71",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C31c9287dbff6",
+      "project": "werkzeug",
+      "parent": "554a333476732459598eb71ef747115774ca99f2",
+      "revision": "a2f29de1255de4c737dbb541476991550c1a1eee",
+      "group_id": "werkzeug-a2f29de1255de4c737dbb541476991550c1a1eee",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C55398e60c741",
+      "project": "werkzeug",
+      "parent": "ae2e7ea63a75b63c064ba045cf997bc9c48a0004",
+      "revision": "cbf351e04aa06fb66202b20750f7a3ef62ab341d",
+      "group_id": "werkzeug-cbf351e04aa06fb66202b20750f7a3ef62ab341d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce90108596452",
+      "project": "werkzeug",
+      "parent": "7526fc0cd4d572aeb175c597c7bf6f9c52f1d198",
+      "revision": "554a333476732459598eb71ef747115774ca99f2",
+      "group_id": "werkzeug-554a333476732459598eb71ef747115774ca99f2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca46eeb2d863c",
+      "project": "werkzeug",
+      "parent": "d53cd468ab918d9e27c00ced575c5cddcb7db052",
+      "revision": "f95be71cf01a6bb4b6fc05c36ab4274200cf8242",
+      "group_id": "werkzeug-f95be71cf01a6bb4b6fc05c36ab4274200cf8242",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb5a2df1f36df",
+      "project": "werkzeug",
+      "parent": "c3c82f4576153581dd11b2e84a3aea6e60069c1f",
+      "revision": "d53cd468ab918d9e27c00ced575c5cddcb7db052",
+      "group_id": "werkzeug-d53cd468ab918d9e27c00ced575c5cddcb7db052",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C28aeb36a4208",
+      "project": "werkzeug",
+      "parent": "c9f7a6b67ffd6c0556440984a931624e2eab0ba1",
+      "revision": "c3c82f4576153581dd11b2e84a3aea6e60069c1f",
+      "group_id": "werkzeug-c3c82f4576153581dd11b2e84a3aea6e60069c1f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cc359bcfe36c5",
+      "project": "werkzeug",
+      "parent": "7a76170c473c26685bdfa2774d083ba2386fc60f",
+      "revision": "62dc7803d22fbeadc9455cbbce4432e31140e75f",
+      "group_id": "werkzeug-62dc7803d22fbeadc9455cbbce4432e31140e75f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf87b88b49a4d",
+      "project": "werkzeug",
+      "parent": "9e050f7750214d6779636813b8d661250804e811",
+      "revision": "553b5f2449f490f95321d76327b66d2ff9f34db8",
+      "group_id": "werkzeug-553b5f2449f490f95321d76327b66d2ff9f34db8",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C1c0157db140e",
+      "project": "werkzeug",
+      "parent": "855665483334f8ae45d0b847351083617f81c4f8",
+      "revision": "b28001e06f71126d32ec095721282c7da647c3c6",
+      "group_id": "werkzeug-b28001e06f71126d32ec095721282c7da647c3c6",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cbdd30f9b0b73",
+      "project": "werkzeug",
+      "parent": "ba5bb0fb23e4735ec9fc021e71ef5eb045f7580c",
+      "revision": "7b7b41cdb7225cbd2fad278c472de251d5bdb154",
+      "group_id": "werkzeug-7b7b41cdb7225cbd2fad278c472de251d5bdb154",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2160e997bb6d",
+      "project": "werkzeug",
+      "parent": "62e3ea45846d06576199a2f8470be7fe44c867c1",
+      "revision": "2e97246502c192776b2baa809dca0451b2255cf4",
+      "group_id": "werkzeug-2e97246502c192776b2baa809dca0451b2255cf4",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8e1cc43cddc7",
+      "project": "werkzeug",
+      "parent": "62e3ea45846d06576199a2f8470be7fe44c867c1",
+      "revision": "e77b40cd7bd47b939583260a01998eea528288f2",
+      "group_id": "werkzeug-e77b40cd7bd47b939583260a01998eea528288f2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C6f216aa4658b",
+      "project": "werkzeug",
+      "parent": "3f41047d830216b150745a8b51f37d32f17cd644",
+      "revision": "30500fb0910b25a365226ef644c0fd85e228dec5",
+      "group_id": "werkzeug-30500fb0910b25a365226ef644c0fd85e228dec5",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C66a1dbca5603",
+      "project": "werkzeug",
+      "parent": "9fd8f5dcd4e4496a3a0bcc7785d2da0a7e07e000",
+      "revision": "16017a9d931608903871bbd8aca60d8489155324",
+      "group_id": "werkzeug-16017a9d931608903871bbd8aca60d8489155324",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce8b7a59723a4",
+      "project": "werkzeug",
+      "parent": "9fd8f5dcd4e4496a3a0bcc7785d2da0a7e07e000",
+      "revision": "cba8652a181184b504d89305a32deccc322d6a28",
+      "group_id": "werkzeug-cba8652a181184b504d89305a32deccc322d6a28",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C77d072ebe133",
+      "project": "werkzeug",
+      "parent": "c7cde2427892004f43e1b672ea85fba6062f8bfd",
+      "revision": "c9f7a6b67ffd6c0556440984a931624e2eab0ba1",
+      "group_id": "werkzeug-c9f7a6b67ffd6c0556440984a931624e2eab0ba1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2ab9973f3ac0",
+      "project": "werkzeug",
+      "parent": "484514fe3036080f0f157ee960ab74f3e7e67c5b",
+      "revision": "c7cde2427892004f43e1b672ea85fba6062f8bfd",
+      "group_id": "werkzeug-c7cde2427892004f43e1b672ea85fba6062f8bfd",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb446e6aca67b",
+      "project": "werkzeug",
+      "parent": "69dc333a65ecfc814c8eb99e32246281fb17c5c1",
+      "revision": "484514fe3036080f0f157ee960ab74f3e7e67c5b",
+      "group_id": "werkzeug-484514fe3036080f0f157ee960ab74f3e7e67c5b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cfcbcdcf5f09d",
+      "project": "werkzeug",
+      "parent": "1565490a7fd0a476dc70e42939890bdc8e01c325",
+      "revision": "e12362681a958711e5430d2de8da8b82ee26a5bf",
+      "group_id": "werkzeug-e12362681a958711e5430d2de8da8b82ee26a5bf",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cce86bff49a7c",
+      "project": "werkzeug",
+      "parent": "5d33a399564516d06f864e2869e5bc6b2827c5e4",
+      "revision": "497794c700106096363407fc3d5fd3ff128ffe84",
+      "group_id": "werkzeug-497794c700106096363407fc3d5fd3ff128ffe84",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C78532078319d",
+      "project": "werkzeug",
+      "parent": "3386395b24c7371db11a5b8eaac0c91da5362692",
+      "revision": "f9995e967979eb694d6b31536cc65314fd7e9c8c",
+      "group_id": "werkzeug-f9995e967979eb694d6b31536cc65314fd7e9c8c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C12c6b7c4f80b",
+      "project": "werkzeug",
+      "parent": "71b69dfb7df3d912e66bab87fbb1f21f83504967",
+      "revision": "890b6b62634fa61224222aee31081c61b054ff01",
+      "group_id": "werkzeug-890b6b62634fa61224222aee31081c61b054ff01",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce93fa3986c58",
+      "project": "iam",
+      "parent": "1c2dfd77fa1515d1c9e45ee60202d5633de82d28",
+      "revision": "677a92189253042a93de2df2f5cf2d3bcab9ad37",
+      "group_id": "iam-677a92189253042a93de2df2f5cf2d3bcab9ad37",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2fe7c6575df9",
+      "project": "iam",
+      "parent": "03d1b49d58a72afa1a4cb9369f49ef7ef38b8ff7",
+      "revision": "1c2dfd77fa1515d1c9e45ee60202d5633de82d28",
+      "group_id": "iam-1c2dfd77fa1515d1c9e45ee60202d5633de82d28",
+      "paths": [
+        "modules/iam-user/main.tf",
+        "modules/iam-user/variables.tf"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Inline-policy support in the user module; deployed variable values and organization policies are not supplied.",
+      "selection_tags": [
+        "iam",
+        "missing-context-candidate"
+      ],
+      "expected_input_hash": "4ac5306ee8e8e97bc0765cf4872a8b83a673a6b7afd37b02720887182e802248"
+    },
+    {
+      "id": "Cfed9b5886dfd",
+      "project": "iam",
+      "parent": "e3e724d96037391812bd9b326ead73a1b45612bc",
+      "revision": "03d1b49d58a72afa1a4cb9369f49ef7ef38b8ff7",
+      "group_id": "iam-03d1b49d58a72afa1a4cb9369f49ef7ef38b8ff7",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf7954fd93d8f",
+      "project": "iam",
+      "parent": "b850a60d0542c88a57dd31d253a8af5b88107ed2",
+      "revision": "e3e724d96037391812bd9b326ead73a1b45612bc",
+      "group_id": "iam-e3e724d96037391812bd9b326ead73a1b45612bc",
+      "paths": [
+        "modules/iam-role/main.tf"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "BitBucket provider URL extraction change in a trust-policy implementation.",
+      "selection_tags": [
+        "iam",
+        "ordinary"
+      ],
+      "expected_input_hash": "07d47ac959931c96b46a709c40a0b41feb12a57d7c3f90655fdeae8312ab4595"
+    },
+    {
+      "id": "C0aca50c849c5",
+      "project": "iam",
+      "parent": "3c66adc7d289ec75306030ab9777d7c1c2ec26cf",
+      "revision": "b850a60d0542c88a57dd31d253a8af5b88107ed2",
+      "group_id": "iam-b850a60d0542c88a57dd31d253a8af5b88107ed2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7e64542913ae",
+      "project": "iam",
+      "parent": "d6109548613e91516a2385599e11888649ed248c",
+      "revision": "3c66adc7d289ec75306030ab9777d7c1c2ec26cf",
+      "group_id": "iam-3c66adc7d289ec75306030ab9777d7c1c2ec26cf",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7590a17fedf6",
+      "project": "iam",
+      "parent": "538a948222b3d006ffec7327c6fd8aa2614023ef",
+      "revision": "d6109548613e91516a2385599e11888649ed248c",
+      "group_id": "iam-external-secrets-policies",
+      "paths": [
+        "modules/iam-role-for-service-accounts/policies.tf"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Conditional secrets-manager policy behavior; avoid assuming the module diff proves effective deployed privilege.",
+      "selection_tags": [
+        "iam",
+        "security-sensitive-change"
+      ],
+      "expected_input_hash": "b0a94a874c4d4e621b7951b13ae1e8d957431f8896c735305269c93b88b96c2d"
+    },
+    {
+      "id": "C43d61bcf25bf",
+      "project": "iam",
+      "parent": "1ed6f73cd012c27050f461836bbb72785f138f41",
+      "revision": "538a948222b3d006ffec7327c6fd8aa2614023ef",
+      "group_id": "iam-538a948222b3d006ffec7327c6fd8aa2614023ef",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C82b5dde39146",
+      "project": "iam",
+      "parent": "f1118320f700c6679fa392013b0a29441cbf6b5e",
+      "revision": "1ed6f73cd012c27050f461836bbb72785f138f41",
+      "group_id": "iam-1ed6f73cd012c27050f461836bbb72785f138f41",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd7f2441d306a",
+      "project": "iam",
+      "parent": "8b2ab9d0748c01bc8244882e184cc7b342fd7fef",
+      "revision": "f1118320f700c6679fa392013b0a29441cbf6b5e",
+      "group_id": "iam-f1118320f700c6679fa392013b0a29441cbf6b5e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C847427d34bea",
+      "project": "iam",
+      "parent": "e56f84df62ac76a4bd310b9d7c38a177d641c9c7",
+      "revision": "8b2ab9d0748c01bc8244882e184cc7b342fd7fef",
+      "group_id": "iam-8b2ab9d0748c01bc8244882e184cc7b342fd7fef",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca649f6c8a3ba",
+      "project": "iam",
+      "parent": "4d779a5254223d5b64391ac0af7291b158141d71",
+      "revision": "e56f84df62ac76a4bd310b9d7c38a177d641c9c7",
+      "group_id": "iam-e56f84df62ac76a4bd310b9d7c38a177d641c9c7",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb8beb8b3489e",
+      "project": "iam",
+      "parent": "31b31d77fcd898118c1f0d6c24dc2609a893c523",
+      "revision": "4d779a5254223d5b64391ac0af7291b158141d71",
+      "group_id": "iam-4d779a5254223d5b64391ac0af7291b158141d71",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C54cc3aefc208",
+      "project": "iam",
+      "parent": "c29ec1ed409683086f63f83ff5b10a6f3c296ef2",
+      "revision": "31b31d77fcd898118c1f0d6c24dc2609a893c523",
+      "group_id": "iam-31b31d77fcd898118c1f0d6c24dc2609a893c523",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb6e8ce596dd7",
+      "project": "iam",
+      "parent": "8e4541de5995a98781e4b44c8bad3103ec77be62",
+      "revision": "c29ec1ed409683086f63f83ff5b10a6f3c296ef2",
+      "group_id": "iam-c29ec1ed409683086f63f83ff5b10a6f3c296ef2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C422d6fef5fa1",
+      "project": "iam",
+      "parent": "c4f752da63ae56e69ca0cb9a0f1eec560f55de90",
+      "revision": "8e4541de5995a98781e4b44c8bad3103ec77be62",
+      "group_id": "iam-external-secrets-policies",
+      "paths": [
+        "modules/iam-role-for-service-accounts-eks/policies.tf"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Policy action addition for parameter retrieval.",
+      "selection_tags": [
+        "iam",
+        "security-sensitive-change"
+      ],
+      "expected_input_hash": "5a1f4d9590580021f2551d2fa6599c2bf7e2970de37eccfc93dfa80e094eed8a"
+    },
+    {
+      "id": "C334efdb83180",
+      "project": "iam",
+      "parent": "0792d7f2753c265e3d610a58348fa1c551cbe4b8",
+      "revision": "c4f752da63ae56e69ca0cb9a0f1eec560f55de90",
+      "group_id": "iam-c4f752da63ae56e69ca0cb9a0f1eec560f55de90",
+      "paths": [
+        "modules/iam-group-with-policies/main.tf",
+        "modules/iam-role-for-service-accounts-eks/variables.tf"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Comments/descriptions corrected in IAM Terraform files; not an automatic privilege-change label.",
+      "selection_tags": [
+        "iam",
+        "hard-negative-candidate"
+      ],
+      "expected_input_hash": "8a95f14b97ae6c2417df8f8a0b6c5029f4147c164ade50c7b70fa9a9b9b91304"
+    },
+    {
+      "id": "C3b252bb725b9",
+      "project": "iam",
+      "parent": "49efa8cfe2d5af39c6c090450da4a667fe020630",
+      "revision": "0792d7f2753c265e3d610a58348fa1c551cbe4b8",
+      "group_id": "iam-0792d7f2753c265e3d610a58348fa1c551cbe4b8",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0b93aa3c08f1",
+      "project": "iam",
+      "parent": "a787dce9c2b493398450af3efc21d6da44fad790",
+      "revision": "49efa8cfe2d5af39c6c090450da4a667fe020630",
+      "group_id": "iam-49efa8cfe2d5af39c6c090450da4a667fe020630",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8112ff54bb73",
+      "project": "iam",
+      "parent": "51c9e9615b3aa56acacba7efccb14efec23afcc6",
+      "revision": "a787dce9c2b493398450af3efc21d6da44fad790",
+      "group_id": "iam-a787dce9c2b493398450af3efc21d6da44fad790",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7e52a0b0eca6",
+      "project": "iam",
+      "parent": "453e9d639fcde4cac2843cabb013d27eac4ef3b1",
+      "revision": "51c9e9615b3aa56acacba7efccb14efec23afcc6",
+      "group_id": "iam-51c9e9615b3aa56acacba7efccb14efec23afcc6",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C661e556ec545",
+      "project": "iam",
+      "parent": "343e5fe756d2e9778d3107c798abf58e7d81230f",
+      "revision": "453e9d639fcde4cac2843cabb013d27eac4ef3b1",
+      "group_id": "iam-453e9d639fcde4cac2843cabb013d27eac4ef3b1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C47ef31930ea1",
+      "project": "iam",
+      "parent": "df4106cc928a35d824c3fe9521f951f080967f90",
+      "revision": "343e5fe756d2e9778d3107c798abf58e7d81230f",
+      "group_id": "iam-343e5fe756d2e9778d3107c798abf58e7d81230f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb40a903bb7cf",
+      "project": "iam",
+      "parent": "4ce604eb558f98df943862818a156af65e5ceca6",
+      "revision": "df4106cc928a35d824c3fe9521f951f080967f90",
+      "group_id": "iam-df4106cc928a35d824c3fe9521f951f080967f90",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7bf52b66928f",
+      "project": "iam",
+      "parent": "416c5ccda8807632b505888d55ca83c3b71282a8",
+      "revision": "4ce604eb558f98df943862818a156af65e5ceca6",
+      "group_id": "iam-4ce604eb558f98df943862818a156af65e5ceca6",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C766f62f2ea39",
+      "project": "iam",
+      "parent": "bfaa70d9b4ed214fdec376d3d6335f2edf9c5227",
+      "revision": "416c5ccda8807632b505888d55ca83c3b71282a8",
+      "group_id": "iam-416c5ccda8807632b505888d55ca83c3b71282a8",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cfb55fd5ae166",
+      "project": "iam",
+      "parent": "f0f2aedeef0877a3ffc2cb0c3a7f65bd08c988c6",
+      "revision": "bfaa70d9b4ed214fdec376d3d6335f2edf9c5227",
+      "group_id": "iam-external-secrets-policies",
+      "paths": [
+        "modules/iam-role-for-service-accounts-eks/policies.tf"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Conditional KMS/SSM policy configuration; grouped with other external-secrets policy changes.",
+      "selection_tags": [
+        "iam",
+        "missing-context-candidate"
+      ],
+      "expected_input_hash": "f28d613a8adbe4bf6ebafe6910d46a17bc5a38953978a4a6aa821d0e3ce9fd92"
+    },
+    {
+      "id": "Caa9de5ea0467",
+      "project": "iam",
+      "parent": "35cdb5ac5ed979092e8234fbb084435cc797080b",
+      "revision": "f0f2aedeef0877a3ffc2cb0c3a7f65bd08c988c6",
+      "group_id": "iam-f0f2aedeef0877a3ffc2cb0c3a7f65bd08c988c6",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0f0819be3532",
+      "project": "iam",
+      "parent": "d5f8809d24cc88f24fe291cd08011ee402b2b20c",
+      "revision": "35cdb5ac5ed979092e8234fbb084435cc797080b",
+      "group_id": "iam-35cdb5ac5ed979092e8234fbb084435cc797080b",
+      "paths": [
+        "modules/iam-role-for-service-accounts-eks/policies.tf"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "External-DNS policy scope correction, a policy fix rather than a presumed negative example.",
+      "selection_tags": [
+        "iam",
+        "security-sensitive-change"
+      ],
+      "expected_input_hash": "f07602045e9ef905cf478aec0b0407763f4f4d808503edf4c392553577cabf0b"
+    },
+    {
+      "id": "Cdc8accee7ae3",
+      "project": "iam",
+      "parent": "304c8b5bbe99a1b17e1d24c96a4a384f108caced",
+      "revision": "d5f8809d24cc88f24fe291cd08011ee402b2b20c",
+      "group_id": "iam-d5f8809d24cc88f24fe291cd08011ee402b2b20c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb59d7d2d1925",
+      "project": "iam",
+      "parent": "d2d8ad46a60e968909ae07acf5c1d5ad29e83917",
+      "revision": "304c8b5bbe99a1b17e1d24c96a4a384f108caced",
+      "group_id": "iam-304c8b5bbe99a1b17e1d24c96a4a384f108caced",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca74ebdfbc706",
+      "project": "iam",
+      "parent": "6b60429bfb8078c6c2b25a7e8bfdfcb03fccf1f0",
+      "revision": "d2d8ad46a60e968909ae07acf5c1d5ad29e83917",
+      "group_id": "iam-d2d8ad46a60e968909ae07acf5c1d5ad29e83917",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb4c957ac8381",
+      "project": "iam",
+      "parent": "3eca351e62774c539178e218c89d5706f44bad16",
+      "revision": "6b60429bfb8078c6c2b25a7e8bfdfcb03fccf1f0",
+      "group_id": "iam-6b60429bfb8078c6c2b25a7e8bfdfcb03fccf1f0",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C8fd47c47e309",
+      "project": "iam",
+      "parent": "e803e25ce20a6ebd5579e0896f657fa739f6f03e",
+      "revision": "3eca351e62774c539178e218c89d5706f44bad16",
+      "group_id": "iam-3eca351e62774c539178e218c89d5706f44bad16",
+      "paths": [
+        "modules/iam-github-oidc-role/main.tf",
+        "modules/iam-github-oidc-role/variables.tf"
+      ],
+      "context": [],
+      "decision": "include",
+      "reason": "Configurable trust conditions; effective inputs and callers are not supplied.",
+      "selection_tags": [
+        "iam",
+        "missing-context-candidate"
+      ],
+      "expected_input_hash": "3c7c966da389e640d15244f51b4a6777dab73639c73b7ff2c19c0e9ebe2a5b61"
+    },
+    {
+      "id": "Cf6aebc806cd0",
+      "project": "iam",
+      "parent": "883499c7780b09392c090d7c62160491d0575ce7",
+      "revision": "e803e25ce20a6ebd5579e0896f657fa739f6f03e",
+      "group_id": "iam-e803e25ce20a6ebd5579e0896f657fa739f6f03e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C22886b35b98f",
+      "project": "iam",
+      "parent": "da5e04acccbf830da97c108919bcf7ae81e66679",
+      "revision": "883499c7780b09392c090d7c62160491d0575ce7",
+      "group_id": "iam-883499c7780b09392c090d7c62160491d0575ce7",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca4f71d484897",
+      "project": "iam",
+      "parent": "9ec4679dd237b7285d1d6ae64c72a9169befce16",
+      "revision": "da5e04acccbf830da97c108919bcf7ae81e66679",
+      "group_id": "iam-da5e04acccbf830da97c108919bcf7ae81e66679",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf45cc108bfe5",
+      "project": "iam",
+      "parent": "b80e98a0b464c7f6e62a281ab7c5a5ebb1189a0e",
+      "revision": "9ec4679dd237b7285d1d6ae64c72a9169befce16",
+      "group_id": "iam-9ec4679dd237b7285d1d6ae64c72a9169befce16",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C31d0d73c0068",
+      "project": "iam",
+      "parent": "c3e54f204b2f8da0f785b4097779ffca980beaaf",
+      "revision": "b80e98a0b464c7f6e62a281ab7c5a5ebb1189a0e",
+      "group_id": "iam-b80e98a0b464c7f6e62a281ab7c5a5ebb1189a0e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd125ce6cb8f1",
+      "project": "iam",
+      "parent": "5bc0223bc5de33884db47a0ba4882c1ceb4a0ac8",
+      "revision": "c3e54f204b2f8da0f785b4097779ffca980beaaf",
+      "group_id": "iam-c3e54f204b2f8da0f785b4097779ffca980beaaf",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cfc33a753b8b8",
+      "project": "iam",
+      "parent": "d886f11d0aa058555d9e35e195b9a263a0bf6398",
+      "revision": "5bc0223bc5de33884db47a0ba4882c1ceb4a0ac8",
+      "group_id": "iam-5bc0223bc5de33884db47a0ba4882c1ceb4a0ac8",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cd6810f4c1e3a",
+      "project": "iam",
+      "parent": "af07763114ecb4dc3d441a467ae18caa8205dbff",
+      "revision": "d886f11d0aa058555d9e35e195b9a263a0bf6398",
+      "group_id": "iam-d886f11d0aa058555d9e35e195b9a263a0bf6398",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cff4b0db0428f",
+      "project": "iam",
+      "parent": "ca9f35596a91ec8a9d0e44a7fbeb45aea6423d48",
+      "revision": "af07763114ecb4dc3d441a467ae18caa8205dbff",
+      "group_id": "iam-af07763114ecb4dc3d441a467ae18caa8205dbff",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3b02b9c70019",
+      "project": "iam",
+      "parent": "fea94c85d7c002406c9dc3a1c97a2c1ea55d720c",
+      "revision": "ca9f35596a91ec8a9d0e44a7fbeb45aea6423d48",
+      "group_id": "iam-ca9f35596a91ec8a9d0e44a7fbeb45aea6423d48",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce54627e806e3",
+      "project": "iam",
+      "parent": "b609236ecdbb782ed758d59dd8c306e935e4b585",
+      "revision": "fea94c85d7c002406c9dc3a1c97a2c1ea55d720c",
+      "group_id": "iam-fea94c85d7c002406c9dc3a1c97a2c1ea55d720c",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C51ee2b0dedd2",
+      "project": "iam",
+      "parent": "e20e0b9a42084bbc885fd5abb18b8744810bd567",
+      "revision": "b609236ecdbb782ed758d59dd8c306e935e4b585",
+      "group_id": "iam-b609236ecdbb782ed758d59dd8c306e935e4b585",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C78cc44fea339",
+      "project": "iam",
+      "parent": "9cfab4a2712523308b03acf2d370ea44128b4128",
+      "revision": "e20e0b9a42084bbc885fd5abb18b8744810bd567",
+      "group_id": "iam-e20e0b9a42084bbc885fd5abb18b8744810bd567",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C6d92335ea466",
+      "project": "iam",
+      "parent": "ef31aca0a9ccbc3dda7d63b704ac8487dc9baea6",
+      "revision": "9cfab4a2712523308b03acf2d370ea44128b4128",
+      "group_id": "iam-9cfab4a2712523308b03acf2d370ea44128b4128",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C0890b7de5dc8",
+      "project": "iam",
+      "parent": "cfb6845f1fb0cf34438b640bd69ee81f7b38332f",
+      "revision": "ef31aca0a9ccbc3dda7d63b704ac8487dc9baea6",
+      "group_id": "iam-ef31aca0a9ccbc3dda7d63b704ac8487dc9baea6",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C675f5c61c2f7",
+      "project": "iam",
+      "parent": "9986b5041996d33f6998349c675a262c11b7dece",
+      "revision": "cfb6845f1fb0cf34438b640bd69ee81f7b38332f",
+      "group_id": "iam-cfb6845f1fb0cf34438b640bd69ee81f7b38332f",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C4df8d5754e91",
+      "project": "iam",
+      "parent": "0773c178086fcddc29cb1fa20112b77059d17624",
+      "revision": "9986b5041996d33f6998349c675a262c11b7dece",
+      "group_id": "iam-9986b5041996d33f6998349c675a262c11b7dece",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cb6baf9311ed7",
+      "project": "iam",
+      "parent": "1bc058c749081f37a67a5d08d24b1fcec449e2f2",
+      "revision": "0773c178086fcddc29cb1fa20112b77059d17624",
+      "group_id": "iam-0773c178086fcddc29cb1fa20112b77059d17624",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C70ccefe82493",
+      "project": "iam",
+      "parent": "15fd17540b6db8be434759e684c1cabf20a5219a",
+      "revision": "1bc058c749081f37a67a5d08d24b1fcec449e2f2",
+      "group_id": "iam-1bc058c749081f37a67a5d08d24b1fcec449e2f2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca4ae8b9de2de",
+      "project": "iam",
+      "parent": "617f4cbaef43e437233468dbeb743acf4069894e",
+      "revision": "15fd17540b6db8be434759e684c1cabf20a5219a",
+      "group_id": "iam-15fd17540b6db8be434759e684c1cabf20a5219a",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Dependency/CI maintenance beyond the first-batch quota; represented by other CI candidates.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca128ff6b2969",
+      "project": "iam",
+      "parent": "966c4f8bc7f9a0742a157d6b8a4a80b4f01d6aa1",
+      "revision": "617f4cbaef43e437233468dbeb743acf4069894e",
+      "group_id": "iam-617f4cbaef43e437233468dbeb743acf4069894e",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf4e3ea143406",
+      "project": "iam",
+      "parent": "95c49ef4179ac1846a4b2d03f7baa51d7029fc98",
+      "revision": "966c4f8bc7f9a0742a157d6b8a4a80b4f01d6aa1",
+      "group_id": "iam-966c4f8bc7f9a0742a157d6b8a4a80b4f01d6aa1",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C00c405222303",
+      "project": "iam",
+      "parent": "f2ade8680465ae86a509a358051c1571805826c9",
+      "revision": "95c49ef4179ac1846a4b2d03f7baa51d7029fc98",
+      "group_id": "iam-95c49ef4179ac1846a4b2d03f7baa51d7029fc98",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce339a0e26bb8",
+      "project": "iam",
+      "parent": "12c4177708aa08677422cdb1523bb5322ebed24a",
+      "revision": "f2ade8680465ae86a509a358051c1571805826c9",
+      "group_id": "iam-f2ade8680465ae86a509a358051c1571805826c9",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C67bf1654f5c4",
+      "project": "iam",
+      "parent": "f0e65a760bf6ddac1344ead5d1f1aaf409c38d18",
+      "revision": "12c4177708aa08677422cdb1523bb5322ebed24a",
+      "group_id": "iam-12c4177708aa08677422cdb1523bb5322ebed24a",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf93d16dea63f",
+      "project": "iam",
+      "parent": "c15f9ddbe4c219caedfc587249b075b87f4b9bfd",
+      "revision": "f0e65a760bf6ddac1344ead5d1f1aaf409c38d18",
+      "group_id": "iam-f0e65a760bf6ddac1344ead5d1f1aaf409c38d18",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C752cf00d9af4",
+      "project": "iam",
+      "parent": "b84b3c2573c3da6223dc963170eec5099e568b0d",
+      "revision": "c15f9ddbe4c219caedfc587249b075b87f4b9bfd",
+      "group_id": "iam-c15f9ddbe4c219caedfc587249b075b87f4b9bfd",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7bd7d5fc8e4f",
+      "project": "iam",
+      "parent": "89fe17a6549728f1dc7e7a8f7b707486dfb45d89",
+      "revision": "b84b3c2573c3da6223dc963170eec5099e568b0d",
+      "group_id": "iam-b84b3c2573c3da6223dc963170eec5099e568b0d",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce0405ac6b610",
+      "project": "iam",
+      "parent": "02a5b7f35ecdd60498d978166ab2033bbdae5013",
+      "revision": "89fe17a6549728f1dc7e7a8f7b707486dfb45d89",
+      "group_id": "iam-89fe17a6549728f1dc7e7a8f7b707486dfb45d89",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Caec42b3ef290",
+      "project": "iam",
+      "parent": "fc799c161cb5451a2c32ad48a89b2f69a91ae8bb",
+      "revision": "02a5b7f35ecdd60498d978166ab2033bbdae5013",
+      "group_id": "iam-02a5b7f35ecdd60498d978166ab2033bbdae5013",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7735bfd92362",
+      "project": "iam",
+      "parent": "56e436441a2064ddfba6db379993127937aa7f28",
+      "revision": "fc799c161cb5451a2c32ad48a89b2f69a91ae8bb",
+      "group_id": "iam-fc799c161cb5451a2c32ad48a89b2f69a91ae8bb",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C42519c27e8b8",
+      "project": "iam",
+      "parent": "017c21af990a2972eb2fbe8b30a9d104ab9b8320",
+      "revision": "56e436441a2064ddfba6db379993127937aa7f28",
+      "group_id": "iam-56e436441a2064ddfba6db379993127937aa7f28",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cdb24acc11959",
+      "project": "iam",
+      "parent": "88ee443b60ecaf542ec221eb4aa8a4c4b3bfa70b",
+      "revision": "017c21af990a2972eb2fbe8b30a9d104ab9b8320",
+      "group_id": "iam-017c21af990a2972eb2fbe8b30a9d104ab9b8320",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C163aa4391ffd",
+      "project": "iam",
+      "parent": "88435a9dfab0b038fae753ae79dfa1a3bea01710",
+      "revision": "88ee443b60ecaf542ec221eb4aa8a4c4b3bfa70b",
+      "group_id": "iam-88ee443b60ecaf542ec221eb4aa8a4c4b3bfa70b",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C2b47bf8b0397",
+      "project": "iam",
+      "parent": "5039e10b5dc3f4129018f3ca19aab68c7e75fbf4",
+      "revision": "88435a9dfab0b038fae753ae79dfa1a3bea01710",
+      "group_id": "iam-88435a9dfab0b038fae753ae79dfa1a3bea01710",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ccaab669c4e22",
+      "project": "iam",
+      "parent": "ada8d1f9b373359931a7e14de5c580dabafc8e42",
+      "revision": "5039e10b5dc3f4129018f3ca19aab68c7e75fbf4",
+      "group_id": "iam-5039e10b5dc3f4129018f3ca19aab68c7e75fbf4",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C09ed8e125c48",
+      "project": "iam",
+      "parent": "e13cb1e5d1356ccb2ddd1bae0ad4c3a17e88eee2",
+      "revision": "ada8d1f9b373359931a7e14de5c580dabafc8e42",
+      "group_id": "iam-ada8d1f9b373359931a7e14de5c580dabafc8e42",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C3bdf07e199ca",
+      "project": "iam",
+      "parent": "de95e21a3bc51cd3a44b3b95a4c2f61000649ebb",
+      "revision": "e13cb1e5d1356ccb2ddd1bae0ad4c3a17e88eee2",
+      "group_id": "iam-e13cb1e5d1356ccb2ddd1bae0ad4c3a17e88eee2",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ce8733f920e21",
+      "project": "iam",
+      "parent": "ecaed18729368514c3a451af727a10dde63c23cf",
+      "revision": "de95e21a3bc51cd3a44b3b95a4c2f61000649ebb",
+      "group_id": "iam-de95e21a3bc51cd3a44b3b95a4c2f61000649ebb",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca355ca517df2",
+      "project": "iam",
+      "parent": "39e42e1f847afe5fd1c1c98c64871817e37e33ca",
+      "revision": "ecaed18729368514c3a451af727a10dde63c23cf",
+      "group_id": "iam-ecaed18729368514c3a451af727a10dde63c23cf",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C5f24cfb9f221",
+      "project": "iam",
+      "parent": "f9d5e28996ca282af4c09cb97f6291cf77ac03ea",
+      "revision": "39e42e1f847afe5fd1c1c98c64871817e37e33ca",
+      "group_id": "iam-39e42e1f847afe5fd1c1c98c64871817e37e33ca",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cf7b85e552336",
+      "project": "iam",
+      "parent": "bf013d23ec4329e6ee1ead1eb372acb5c1a86566",
+      "revision": "f9d5e28996ca282af4c09cb97f6291cf77ac03ea",
+      "group_id": "iam-f9d5e28996ca282af4c09cb97f6291cf77ac03ea",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C9df27d04c580",
+      "project": "iam",
+      "parent": "ec0484d1b816e660cb7cc7756c6e0465160aef7a",
+      "revision": "bf013d23ec4329e6ee1ead1eb372acb5c1a86566",
+      "group_id": "iam-bf013d23ec4329e6ee1ead1eb372acb5c1a86566",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Ca49327e4676c",
+      "project": "iam",
+      "parent": "9ea77ca6ff435702e8c22b74e14dc3931b2f1207",
+      "revision": "ec0484d1b816e660cb7cc7756c6e0465160aef7a",
+      "group_id": "iam-ec0484d1b816e660cb7cc7756c6e0465160aef7a",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Documentation, translation or test-only change omitted from this first implementation-diff batch; not a negative annotation.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "C7bf8d2ed7e2d",
+      "project": "iam",
+      "parent": "f65532fc786b79b1ef24b0993e8f2ff6b25b22cf",
+      "revision": "9ea77ca6ff435702e8c22b74e14dc3931b2f1207",
+      "group_id": "iam-9ea77ca6ff435702e8c22b74e14dc3931b2f1207",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    },
+    {
+      "id": "Cc65d9fb1b315",
+      "project": "iam",
+      "parent": "f0a3a1cf8ba2f43f7919ba29593be3e9cadd363c",
+      "revision": "f65532fc786b79b1ef24b0993e8f2ff6b25b22cf",
+      "group_id": "iam-f65532fc786b79b1ef24b0993e8f2ff6b25b22cf",
+      "paths": [],
+      "context": [],
+      "decision": "exclude",
+      "reason": "Outside the eight-commit first-batch quota; not a negative security label.",
+      "selection_tags": [
+        "not-selected"
+      ],
+      "expected_input_hash": null
+    }
+  ]
+}
