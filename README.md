@@ -19,6 +19,7 @@ Use Python 3.11+ and [uv](https://docs.astral.sh/uv/):
 uv sync --locked
 uv run sev taxonomy
 uv run sev validate data/smoke.jsonl
+uv run sev verify-intake data/pilot-001/manifest.json data/pilot-001
 uv run python -m unittest discover -s tests -v
 uv run sev bench data/smoke.jsonl --split smoke --backend rules --out artifacts/rules
 git diff | uv run sev --backend rules
@@ -70,6 +71,7 @@ compared with `--backend kev --endpoint http://127.0.0.1:8009` and its model/rev
 - [Kev architecture investigation](docs/kev.md): exact source revision, shared context, pointer readout, hybrid-backbone caveats and required security adaptations.
 - [Taxonomy and annotation guide](docs/taxonomy.md): 14 evals, definitions and four kinds of examples per eval.
 - [Dataset design and candidate sources](docs/dataset.md): provenance, annotation, hard negatives and contamination controls.
+- [Real-diff intake](docs/intake.md): reproducible importer and 32 unlabelled development candidates from four projects, with original licenses and an annotation handoff.
 - [Experiment protocol](docs/experiment.md): baselines, metrics, calibration, cost, hardware matrix and falsification criteria.
 - [Measured results and limitations](docs/results.md): distinguishes executed runs from planned comparisons.
 
