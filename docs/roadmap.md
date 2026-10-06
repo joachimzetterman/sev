@@ -1,6 +1,6 @@
 # Research roadmap
 
-Status reviewed: 2026-10-05. Update this file as milestones are completed or the
+Status reviewed: 2026-10-06. Update this file as milestones are completed or the
 evidence changes the plan. The linked protocols hold the detailed definitions;
 this file records the execution order and next deliverable.
 
@@ -27,6 +27,19 @@ small workflow proves useful.
 The real-diff intake and 32-candidate batch were merged in
 [PR #2](https://github.com/joachimzetterman/sev/pull/2) and are available alongside
 the preview. The research sequence below remains the longer-term plan.
+
+## Research focus from the external review
+
+Prioritise our independently labelled code-diff dataset and controlled training
+experiments. Alongside annotation, the next engineering experiment is a stronger
+ordinary-model baseline with shared-prefix scoring, initially on MLX. Early
+workflow and timing diagnostics may use provisional inputs; credible quality
+claims and specialised training still require the independent data below.
+
+The [research findings and experiment priorities](research-findings.md) preserve
+the SecJev and OpenJev evidence, reusable methods, integration caveats and
+conditions for revisiting this focus. External corpus or checkpoint adoption is
+not a prerequisite for the next milestone.
 
 ## Current evidence
 
